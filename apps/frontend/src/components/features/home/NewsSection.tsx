@@ -1,8 +1,12 @@
 import Link from "next/link";
 import { ArrowRight, Calendar } from "lucide-react";
-import { MOCK_NEWS } from "@/lib/mock-data";
+import { News } from "@/types";
 
-export function NewsSection() {
+interface NewsSectionProps {
+  newsList: News[];
+}
+
+export function NewsSection({ newsList }: NewsSectionProps) {
   return (
     <section className="py-24 bg-neutral-50 border-t border-neutral-200">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,14 +20,18 @@ export function NewsSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {MOCK_NEWS.map((news) => (
+          {newsList.map((news) => (
             <Link 
               key={news.id} 
               href={`/news/${news.id}`}
               className="group bg-white rounded-2xl border border-neutral-200 overflow-hidden hover:shadow-lg transition-all flex flex-col h-full"
             >
               <div className="h-48 bg-neutral-200 relative overflow-hidden">
-                <div className="absolute inset-0 bg-primary-900/5 group-hover:scale-105 transition-transform duration-500" />
+                {news.imageUrl ? (
+                  <img src={news.imageUrl} alt={news.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                ) : (
+                  <div className="absolute inset-0 bg-primary-900/5 group-hover:scale-105 transition-transform duration-500" />
+                )}
               </div>
               <div className="p-6 flex flex-col flex-grow">
                 <div className="flex items-center gap-4 text-xs font-medium text-neutral-500 mb-3">

@@ -1,13 +1,13 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { MOCK_NEWS } from "@/lib/mock-data";
+import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { Calendar, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const news = MOCK_NEWS.find(n => n.id === id);
+  const news = await prisma.news.findUnique({ where: { id } });
   
   if (!news) return { title: "Новость не найдена" };
   
@@ -17,15 +17,11 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   };
 }
 
-export function generateStaticParams() {
-  return MOCK_NEWS.map((news) => ({
-    id: news.id.toString(),
-  }));
-}
+export const revalidate = 60;
 
 export default async function NewsDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const news = MOCK_NEWS.find(n => n.id === id);
+  const news = await prisma.news.findUnique({ where: { id } });
 
   if (!news) {
     notFound();
@@ -43,10 +39,14 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
 
           <article className="bg-white rounded-3xl border border-neutral-200 overflow-hidden shadow-sm">
             <div className="h-64 sm:h-80 md:h-96 bg-neutral-200 relative w-full">
-              {/* Image Placeholder */}
-              <div className="absolute inset-0 bg-primary-900/5 flex items-center justify-center">
-                 <span className="text-primary-900/20 font-serif font-bold text-4xl">Фото новости</span>
-              </div>
+              {news.imageUrl && (
+                <img src={news.imageUrl} alt={news.title} className="w-full h-full object-cover" />
+              )}
+              {!news.imageUrl && (
+                <div className="absolute inset-0 bg-primary-900/5 flex items-center justify-center">
+                   <span className="text-primary-900/20 font-serif font-bold text-4xl">Фото новости</span>
+                </div>
+              )}
             </div>
             
             <div className="p-8 sm:p-12">

@@ -1,12 +1,13 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CollegeProfile } from "@/components/features/colleges/CollegeProfile";
-import { MOCK_COLLEGES } from "@/lib/mock-data";
+import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
+import { College } from "@/types";
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const college = MOCK_COLLEGES.find(c => c.id === id);
+  const college = await prisma.college.findUnique({ where: { id } });
   
   if (!college) return { title: "Колледж не найден" };
   
@@ -16,19 +17,31 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   };
 }
 
-export function generateStaticParams() {
-  return MOCK_COLLEGES.map((college) => ({
-    id: college.id,
-  }));
-}
+export const revalidate = 60;
 
 export default async function CollegeDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const college = MOCK_COLLEGES.find(c => c.id === id);
+  const dbCollege = await prisma.college.findUnique({
+    where: { id },
+    include: { specialties: true }
+  });
 
-  if (!college) {
+  if (!dbCollege) {
     notFound();
   }
+
+  // Приводим данные БД к типу, который ожидает компонент
+  const college: College = {
+    ...dbCollege,
+    specialties: dbCollege.specialties.map(s => s.name),
+    contacts: {
+      phone: dbCollege.phone || undefined,
+      email: dbCollege.email || undefined,
+      address: dbCollege.address || undefined,
+      website: dbCollege.website || undefined,
+      instagram: dbCollege.instagram || undefined,
+    }
+  };
 
   return (
     <>

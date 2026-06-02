@@ -1,31 +1,12 @@
 import { Building2, MapPin, Users } from "lucide-react";
 import Link from "next/link";
+import { College } from "@/types";
 
-const MOCK_COLLEGES = [
-  {
-    id: 1,
-    name: "Талдыкорганский высший политехнический колледж",
-    city: "г. Талдыкорган",
-    type: "Государственный",
-    students: "2400+",
-  },
-  {
-    id: 2,
-    name: "Жетысуский гуманитарно-технический колледж",
-    city: "г. Талдыкорган",
-    type: "Частный",
-    students: "1800+",
-  },
-  {
-    id: 3,
-    name: "Каскеленский профессионально-технический колледж",
-    city: "г. Каскелен",
-    type: "Государственный",
-    students: "1200+",
-  }
-];
+interface PopularCollegesProps {
+  colleges: College[];
+}
 
-export function PopularColleges() {
+export function PopularColleges({ colleges }: PopularCollegesProps) {
   return (
     <section className="py-24 bg-neutral-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -42,7 +23,7 @@ export function PopularColleges() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {MOCK_COLLEGES.map((college) => (
+          {colleges.map((college) => (
             <Link 
               key={college.id} 
               href={`/colleges/${college.id}`}
@@ -56,7 +37,7 @@ export function PopularColleges() {
               </div>
               <div className="p-6">
                 <div className="flex items-center gap-2 text-xs font-medium text-primary-500 bg-primary-50 w-fit px-2.5 py-1 rounded-md mb-4">
-                  {college.type}
+                  {college.isState ? "Государственный" : "Частный"}
                 </div>
                 <h3 className="font-serif font-bold text-xl text-neutral-900 mb-3 group-hover:text-primary-500 transition-colors">
                   {college.name}
@@ -68,7 +49,7 @@ export function PopularColleges() {
                   </div>
                   <div className="flex items-center gap-2">
                     <Users className="w-4 h-4" />
-                    <span>{college.students} студентов</span>
+                    <span>{college.studentCount || "Нет данных"} студентов</span>
                   </div>
                 </div>
               </div>

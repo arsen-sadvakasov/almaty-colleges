@@ -1,6 +1,6 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { MOCK_SPECIALTIES } from "@/lib/mock-data";
+import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { BookOpen, GraduationCap, ChevronRight } from "lucide-react";
 
@@ -9,7 +9,13 @@ export const metadata = {
   description: "Каталог специальностей и профессий для поступления в колледжи",
 };
 
-export default function SpecialtiesPage() {
+export const revalidate = 60;
+
+export default async function SpecialtiesPage() {
+  const specialties = await prisma.specialty.findMany({
+    orderBy: { name: 'asc' }
+  });
+
   return (
     <>
       <Header />
@@ -25,7 +31,7 @@ export default function SpecialtiesPage() {
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {MOCK_SPECIALTIES.map((specialty) => (
+            {specialties.map((specialty) => (
               <Link 
                 key={specialty.id} 
                 href={`/specialties/${specialty.id}`}

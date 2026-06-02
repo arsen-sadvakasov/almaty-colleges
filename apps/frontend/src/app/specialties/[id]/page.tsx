@@ -1,12 +1,13 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SpecialtyProfile } from "@/components/features/specialties/SpecialtyProfile";
-import { MOCK_SPECIALTIES, MOCK_COLLEGES } from "@/lib/mock-data";
+import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
+import { Specialty, College } from "@/types";
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const specialty = MOCK_SPECIALTIES.find(s => s.id === id);
+  const specialty = await prisma.specialty.findUnique({ where: { id } });
   
   if (!specialty) return { title: "Специальность не найдена" };
   
@@ -16,21 +17,38 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   };
 }
 
-export function generateStaticParams() {
-  return MOCK_SPECIALTIES.map((specialty) => ({
-    id: specialty.id,
-  }));
-}
+export const revalidate = 60;
 
 export default async function SpecialtyDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const specialty = MOCK_SPECIALTIES.find(s => s.id === id);
+  const dbSpecialty = await prisma.specialty.findUnique({
+    where: { id },
+    include: { colleges: true }
+  });
 
-  if (!specialty) {
+  if (!dbSpecialty) {
     notFound();
   }
 
-  const colleges = MOCK_COLLEGES.filter(c => specialty.colleges.includes(c.id));
+  const specialty: Specialty = {
+    ...dbSpecialty,
+    careerProspects: JSON.parse(dbSpecialty.careerProspects),
+    skills: JSON.parse(dbSpecialty.skills),
+    profileSubjects: JSON.parse(dbSpecialty.profileSubjects),
+    colleges: dbSpecialty.colleges.map(c => c.id)
+  };
+
+  const colleges: College[] = dbSpecialty.colleges.map(c => ({
+    ...c,
+    specialties: [],
+    contacts: {
+      phone: c.phone || undefined,
+      email: c.email || undefined,
+      address: c.address || undefined,
+      website: c.website || undefined,
+      instagram: c.instagram || undefined,
+    }
+  }));
 
   return (
     <>

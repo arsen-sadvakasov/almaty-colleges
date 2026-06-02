@@ -1,13 +1,26 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CollegesList } from "@/components/features/colleges/CollegesList";
+import { prisma } from "@/lib/prisma";
 
 export const metadata = {
   title: "Каталог колледжей | Портал колледжей Алматинской области",
   description: "Поиск и сравнение колледжей Алматинской области",
 };
 
-export default function CollegesPage() {
+export const revalidate = 60; // кэширование на 60 секунд
+
+export default async function CollegesPage() {
+  const collegesData = await prisma.college.findMany({
+    include: { specialties: true },
+    orderBy: { rating: 'desc' }
+  });
+  
+  const colleges = collegesData.map(c => ({
+    ...c,
+    specialties: c.specialties.map(s => s.name)
+  }));
+
   return (
     <>
       <Header />
@@ -22,7 +35,7 @@ export default function CollegesPage() {
         </div>
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <CollegesList />
+          <CollegesList colleges={colleges} />
         </div>
       </main>
       <Footer />

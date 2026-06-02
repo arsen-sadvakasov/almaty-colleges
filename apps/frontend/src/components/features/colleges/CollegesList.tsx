@@ -3,9 +3,25 @@
 import { useState, useMemo } from "react";
 import { Search, MapPin, Building2, Check, Star } from "lucide-react";
 import Link from "next/link";
-import { MOCK_COLLEGES, CITIES, SPECIALTIES } from "@/lib/mock-data";
 
-export function CollegesList() {
+interface CollegeType {
+  id: string;
+  name: string;
+  city: string;
+  isState: boolean;
+  hasDormitory: boolean;
+  hasGrants: boolean;
+  rating: number;
+  specialties: string[];
+}
+
+export function CollegesList({ colleges }: { colleges: CollegeType[] }) {
+  const CITIES = useMemo(() => Array.from(new Set(colleges.map(c => c.city))).sort(), [colleges]);
+  const SPECIALTIES = useMemo(() => {
+    const all = colleges.flatMap(c => c.specialties);
+    return Array.from(new Set(all)).sort();
+  }, [colleges]);
+
   const [search, setSearch] = useState("");
   const [cityFilter, setCityFilter] = useState("");
   const [specialtyFilter, setSpecialtyFilter] = useState("");
@@ -18,7 +34,7 @@ export function CollegesList() {
   const ITEMS_PER_PAGE = 6;
 
   const filteredColleges = useMemo(() => {
-    let result = MOCK_COLLEGES;
+    let result = colleges;
 
     if (search) {
       result = result.filter(c => c.name.toLowerCase().includes(search.toLowerCase()));
