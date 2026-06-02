@@ -1,7 +1,11 @@
-import Link from "next/link";
-import { Search, Globe, User } from "lucide-react";
+import { Search, User } from "lucide-react";
+import { useTranslations } from 'next-intl';
+import { LanguageSwitcher } from '../features/i18n/LanguageSwitcher';
+import { Link } from '@/i18n/routing';
 
 export function Header() {
+  const t = useTranslations('Header');
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-neutral-200 bg-white/80 backdrop-blur-md">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -15,9 +19,9 @@ export function Header() {
             </span>
           </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-neutral-500">
-            <Link href="/colleges" className="hover:text-primary-900 transition-colors">Колледжи</Link>
-            <Link href="/specialties" className="hover:text-primary-900 transition-colors">Специальности</Link>
-            <Link href="/applicant" className="hover:text-primary-900 transition-colors">Абитуриенту</Link>
+            <Link href="/colleges" className="hover:text-primary-900 transition-colors">{t('colleges')}</Link>
+            <Link href="/specialties" className="hover:text-primary-900 transition-colors">{t('specialties')}</Link>
+            <Link href="/applicant" className="hover:text-primary-900 transition-colors">{t('applicant')}</Link>
           </nav>
         </div>
 
@@ -25,16 +29,15 @@ export function Header() {
           <button className="p-2 text-neutral-500 hover:text-primary-900 transition-colors hidden sm:block">
             <Search className="w-5 h-5" />
           </button>
-          <button className="flex items-center gap-1 text-sm font-medium text-neutral-500 hover:text-primary-900 transition-colors">
-            <Globe className="w-4 h-4" />
-            <span className="hidden sm:inline">RU</span>
-          </button>
+          
+          <LanguageSwitcher />
+
           <Link 
             href="/login" 
             className="flex items-center gap-2 bg-primary-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-900/90 transition-colors"
           >
             <User className="w-4 h-4" />
-            <span className="hidden sm:inline">Войти</span>
+            <span className="hidden sm:inline">{t('login')}</span>
           </Link>
         </div>
       </div>
