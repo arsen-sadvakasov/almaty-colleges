@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  role      String   @default("APPLICANT") // APPLICANT, ADMIN, SUPERADMIN
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Избранное
+  favoriteColleges    College[]   @relation("UserFavoriteColleges")
+  favoriteSpecialties Specialty[] @relation("UserFavoriteSpecialties")
+}
+
+model College {
+  id             String   @id @default(cuid())
+  name           String
+  city           String
+  isState        Boolean  @default(true)
+  hasDormitory   Boolean  @default(false)
+  hasGrants      Boolean  @default(false)
+  studentsCount  Int      @default(0)
+  rating         Float    @default(0.0)
+  imageUrl       String?
+  history        String?
+  description    String?
+  dormitoryInfo  String?
+  tuitionFee     String?
+  admissionRules String?
+  
+  // Контакты
+  phone          String?
+  email          String?
+  address        String?
+  website        String?
+  instagram      String?
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Связи
+  specialties    Specialty[] @relation("CollegeSpecialties")
+  favoritedBy    User[]      @relation("UserFavoriteColleges")
+}
+
+model Specialty {
+  id              String   @id @default(cuid())
+  code            String
+  name            String
+  description     String
+  studyDuration   String
+  qualification   String
+  
+  // Массивы строк хранятся в SQLite в виде JSON
+  careerProspects String
+  skills          String
+  profileSubjects String
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Связи
+  colleges        College[] @relation("CollegeSpecialties")
+  favoritedBy     User[]    @relation("UserFavoriteSpecialties")
+}
+
+model News {
+  id        String   @id @default(cuid())
+  title     String
+  date      String
+  category  String
+  content   String
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
