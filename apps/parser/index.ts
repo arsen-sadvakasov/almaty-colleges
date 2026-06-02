@@ -3,7 +3,6 @@ import * as cheerio from 'cheerio';
 import * as fs from 'fs';
 import * as path from 'path';
 
-// Пример структуры данных
 interface ParsedCollege {
   name: string;
   city: string;
@@ -12,57 +11,121 @@ interface ParsedCollege {
   specialties: string[];
 }
 
-// Список сайтов для парсинга (для примера берем моковые URL или реальные, если они известны)
+const BASE_URL = 'https://www.vipusknik.kz';
+// Both region URL and specific city URL (Almaty) to get all colleges
 const TARGET_URLS = [
-  'https://www.google.com/search?q=Колледжи+Алматинской+области', // Пример стартовой точки
+  'https://www.vipusknik.kz/institutions/colleges?region=almatinskaya-oblast',
+  'https://www.vipusknik.kz/institutions/college?city_name=3'
 ];
 
-async function parseCollegeWebsite(url: string): Promise<ParsedCollege | null> {
+async function getCollegeLinks(url: string): Promise<string[]> {
   try {
-    console.log(`[Парсер] Сканирование: ${url}`);
+    const res = await axios.get(url);
+    const $ = cheerio.load(res.data);
+    const links = new Set<string>();
     
-    // В реальном проекте здесь будет axios.get(url) 
-    // Для демо-целей мы симулируем задержку и возвращаем фейковые спарсенные данные, 
-    // так как структура реальных сайтов колледжей сильно отличается.
+    $('a').each((i, el) => {
+      const href = $(el).attr('href');
+      if (href && href.includes('/institutions/college/') && !href.includes('/institutions/colleges')) {
+        links.add(href);
+      }
+    });
     
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    return Array.from(links);
+  } catch (err) {
+    console.error(`Error fetching list from ${url}:`, err);
+    return [];
+  }
+}
+
+async function parseCollege(url: string): Promise<ParsedCollege | null> {
+  try {
+    const res = await axios.get(url);
+    const $ = cheerio.load(res.data);
+    
+    const name = $('h1').first().text().trim() || $('title').text().trim();
+    if (!name) return null;
+
+    // A lot of fields are just inside paragraphs or divs. 
+    // We try to grab the whole description block.
+    // .institution-description is common, but let's grab general text if missing.
+    let description = $('.institution-description').text().trim();
+    if (!description) {
+      // Fallback: take all text from the main article/body excluding script/style
+      const content = $('.content-block, article, main').first().text().trim() || $('body').text().trim();
+      description = content.substring(0, 1000).replace(/\s+/g, ' ').trim();
+    }
+    
+    // Fallback logic for city
+    let city = $('.institution-city').text().trim();
+    if (!city) {
+      if (url.includes('almaty')) city = 'Алматы';
+      else city = 'Алматинская область';
+    }
+
+    const specialties: string[] = [];
+    $('.specialty-item, .specialty-name, td:first-child').each((i, el) => {
+      const spec = $(el).text().trim();
+      if (spec && spec.length > 3 && !specialties.includes(spec)) {
+        specialties.push(spec);
+      }
+    });
 
     return {
-      name: "Спарсенный Колледж Инноваций",
-      city: "Конаев",
-      description: "Новейший колледж, данные получены с официального сайта автоматическим путем.",
+      name,
+      city,
+      description: description || 'Описание отсутствует.',
       website: url,
-      specialties: ["Кибербезопасность", "Электроника"]
+      specialties: specialties.slice(0, 15) // Limit to 15 specialties max
     };
-
-  } catch (error) {
-    console.error(`[Ошибка] Не удалось спарсить ${url}:`, error);
+  } catch (err) {
+    console.error(`Error parsing college ${url}:`, err);
     return null;
   }
 }
 
 async function runParser() {
-  console.log("=== ЗАПУСК ПАРСЕРА КОЛЛЕДЖЕЙ ===");
-  const results: ParsedCollege[] = [];
-
+  console.log("=== STARTING COLLEGE PARSER ===");
+  
+  const allLinks = new Set<string>();
+  
   for (const url of TARGET_URLS) {
-    const data = await parseCollegeWebsite(url);
-    if (data) {
-      results.push(data);
+    console.log(`Fetching list from: ${url}`);
+    const links = await getCollegeLinks(url);
+    links.forEach(link => {
+      if (link.startsWith('http')) {
+        allLinks.add(link);
+      } else {
+        allLinks.add(`${BASE_URL}${link}`);
+      }
+    });
+  }
+  
+  console.log(`Found ${allLinks.size} unique college links. Beginning extraction...`);
+  
+  const results: ParsedCollege[] = [];
+  let count = 0;
+  
+  for (const link of allLinks) {
+    count++;
+    console.log(`[${count}/${allLinks.size}] Parsing: ${link}`);
+    const college = await parseCollege(link);
+    if (college) {
+      results.push(college);
     }
+    // Rate limiting to prevent IP block
+    await new Promise(r => setTimeout(r, 1000));
   }
 
-  // Сохраняем результаты
   const outputPath = path.join(__dirname, 'data', 'parsed_colleges.json');
-  
   if (!fs.existsSync(path.dirname(outputPath))) {
     fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   }
 
   fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
-  console.log(`\n[Готово] Спарсено колледжей: ${results.length}. Данные сохранены в ${outputPath}`);
-  console.log("=== ПАРСИНГ ЗАВЕРШЕН ===");
+  console.log(`\n=== PARSING COMPLETE ===`);
+  console.log(`Successfully parsed ${results.length} colleges.`);
+  console.log(`Data saved to: ${outputPath}`);
 }
 
-// Запуск парсера
 runParser();
