@@ -1,26 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, Calendar } from "lucide-react";
-
-const MOCK_NEWS = [
-  {
-    id: 1,
-    title: "Стартовал прием документов на грант 2026",
-    date: "25 Июня 2026",
-    category: "Поступление",
-  },
-  {
-    id: 2,
-    title: "В Талдыкоргане открылся новый IT-колледж с общежитием",
-    date: "10 Мая 2026",
-    category: "Образование",
-  },
-  {
-    id: 3,
-    title: "Список востребованных профессий Алматинской области",
-    date: "02 Апреля 2026",
-    category: "Аналитика",
-  }
-];
+import { MOCK_NEWS } from "@/lib/mock-data";
 
 export function NewsSection() {
   return (
