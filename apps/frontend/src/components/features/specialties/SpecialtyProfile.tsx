@@ -1,6 +1,7 @@
 import { Specialty, College } from "@/types";
 import { BookOpen, Briefcase, GraduationCap, Clock, CheckCircle2, Building2 } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
+import { useTranslations } from 'next-intl';
 
 interface SpecialtyProfileProps {
   specialty: Specialty;
@@ -8,6 +9,8 @@ interface SpecialtyProfileProps {
 }
 
 export function SpecialtyProfile({ specialty, colleges }: SpecialtyProfileProps) {
+  const t = useTranslations('SpecialtyProfile');
+
   return (
     <div className="bg-neutral-50 min-h-screen">
       {/* Hero Section */}
@@ -16,7 +19,7 @@ export function SpecialtyProfile({ specialty, colleges }: SpecialtyProfileProps)
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="mb-6 flex gap-2 items-center">
              <span className="bg-white/10 px-3 py-1 rounded-lg text-sm font-medium backdrop-blur-sm">
-                Код: {specialty.code}
+                {t('code', { code: specialty.code })}
              </span>
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4">{specialty.name}</h1>
@@ -39,7 +42,7 @@ export function SpecialtyProfile({ specialty, colleges }: SpecialtyProfileProps)
                   <GraduationCap className="w-6 h-6" />
                 </div>
                 <div>
-                  <div className="text-sm text-neutral-500 mb-1">Квалификация</div>
+                  <div className="text-sm text-neutral-500 mb-1">{t('qualification')}</div>
                   <div className="font-bold text-neutral-900">{specialty.qualification}</div>
                 </div>
               </div>
@@ -48,7 +51,7 @@ export function SpecialtyProfile({ specialty, colleges }: SpecialtyProfileProps)
                   <Clock className="w-6 h-6" />
                 </div>
                 <div>
-                  <div className="text-sm text-neutral-500 mb-1">Срок обучения</div>
+                  <div className="text-sm text-neutral-500 mb-1">{t('studyDuration')}</div>
                   <div className="font-bold text-neutral-900">{specialty.studyDuration}</div>
                 </div>
               </div>
@@ -58,7 +61,7 @@ export function SpecialtyProfile({ specialty, colleges }: SpecialtyProfileProps)
             <div className="bg-white p-8 rounded-2xl border border-neutral-200 shadow-sm">
               <h2 className="text-2xl font-serif font-bold text-neutral-900 mb-6 flex items-center gap-3">
                 <Briefcase className="w-6 h-6 text-primary-500" />
-                Кем работать
+                {t('careerProspects')}
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {specialty.careerProspects.map((career, i) => (
@@ -74,7 +77,7 @@ export function SpecialtyProfile({ specialty, colleges }: SpecialtyProfileProps)
             <div className="bg-white p-8 rounded-2xl border border-neutral-200 shadow-sm">
               <h2 className="text-2xl font-serif font-bold text-neutral-900 mb-6 flex items-center gap-3">
                 <BookOpen className="w-6 h-6 text-primary-500" />
-                Чему вы научитесь
+                {t('skills')}
               </h2>
               <ul className="space-y-3">
                 {specialty.skills.map((skill, i) => (
@@ -93,8 +96,8 @@ export function SpecialtyProfile({ specialty, colleges }: SpecialtyProfileProps)
             
             {/* Admissions Info */}
             <div className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm">
-              <h3 className="font-serif font-bold text-xl text-neutral-900 mb-4">Профильные предметы</h3>
-              <p className="text-sm text-neutral-500 mb-4">Для поступления на базе 11 классов или ТиПО необходимо сдать профильные предметы:</p>
+              <h3 className="font-serif font-bold text-xl text-neutral-900 mb-4">{t('profileSubjectsTitle')}</h3>
+              <p className="text-sm text-neutral-500 mb-4">{t('profileSubjectsDesc')}</p>
               <div className="flex flex-wrap gap-2">
                 {specialty.profileSubjects.map((subject, i) => (
                   <span key={i} className="bg-primary-50 text-primary-700 px-3 py-1.5 rounded-lg text-sm font-medium border border-primary-100">
@@ -106,7 +109,7 @@ export function SpecialtyProfile({ specialty, colleges }: SpecialtyProfileProps)
 
             {/* Colleges offering this */}
             <div className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm">
-              <h3 className="font-serif font-bold text-xl text-neutral-900 mb-4">Где учиться?</h3>
+              <h3 className="font-serif font-bold text-xl text-neutral-900 mb-4">{t('whereToStudy')}</h3>
               <div className="space-y-4">
                 {colleges.length > 0 ? colleges.map(college => (
                   <Link 
@@ -125,12 +128,12 @@ export function SpecialtyProfile({ specialty, colleges }: SpecialtyProfileProps)
                     </div>
                   </Link>
                 )) : (
-                  <p className="text-sm text-neutral-500">Пока нет данных о колледжах для этой специальности.</p>
+                  <p className="text-sm text-neutral-500">{t('noCollegesData')}</p>
                 )}
               </div>
               
               <Link href="/colleges" className="w-full mt-6 flex items-center justify-center border border-primary-200 text-primary-600 font-medium py-2.5 rounded-xl transition-colors hover:bg-primary-50">
-                Смотреть все колледжи
+                {t('viewAllColleges')}
               </Link>
             </div>
 

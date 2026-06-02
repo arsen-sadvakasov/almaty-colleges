@@ -4,16 +4,18 @@ import { CollegeProfile } from "@/components/features/colleges/CollegeProfile";
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { College } from "@/types";
+import { getTranslations } from 'next-intl/server';
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
+export async function generateMetadata({ params }: { params: Promise<{ id: string, locale: string }> }) {
+  const { id, locale } = await params;
   const college = await prisma.college.findUnique({ where: { id } });
+  const t = await getTranslations({ locale, namespace: 'CollegeDetailPage' });
   
-  if (!college) return { title: "Колледж не найден" };
+  if (!college) return { title: t('notFound') };
   
   return {
-    title: `${college.name} | Портал колледжей Алматинской области`,
-    description: college.description || `Информация о ${college.name}`,
+    title: t('metaTitle', { name: college.name }),
+    description: college.description || t('metaDescription', { name: college.name }),
   };
 }
 

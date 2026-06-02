@@ -2,13 +2,21 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { AiConsultant } from "@/components/features/chat/AiConsultant";
 import { Sparkles } from "lucide-react";
+import { getTranslations } from 'next-intl/server';
 
-export const metadata = {
-  title: "AI Консультант | Портал колледжей Алматинской области",
-  description: "Виртуальный помощник для абитуриентов Алматинской области.",
-};
+export async function generateMetadata({ params }: { params: Promise<{locale: string}> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'ChatPage' });
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+  };
+}
 
-export default function ChatPage() {
+export default async function ChatPage({ params }: { params: Promise<{locale: string}> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'ChatPage' });
+
   return (
     <>
       <Header />
@@ -21,10 +29,10 @@ export default function ChatPage() {
               <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-sm">
                 <Sparkles className="w-6 h-6 text-white" />
               </div>
-              <h1 className="text-3xl md:text-5xl font-serif font-bold">Умный помощник</h1>
+              <h1 className="text-3xl md:text-5xl font-serif font-bold">{t('title')}</h1>
             </div>
             <p className="text-primary-100 max-w-2xl text-lg">
-              Задайте любой вопрос о поступлении, выборе профессии или поиске колледжа нашему AI-консультанту.
+              {t('subtitle')}
             </p>
           </div>
         </div>

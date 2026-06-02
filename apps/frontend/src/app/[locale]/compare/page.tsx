@@ -2,13 +2,21 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CompareView } from "@/components/features/compare/CompareView";
 import { Scale } from "lucide-react";
+import { getTranslations } from 'next-intl/server';
 
-export const metadata = {
-  title: "Сравнение колледжей | Портал колледжей Алматинской области",
-  description: "Сравнение учебных заведений по рейтингу, специальностям, наличию общежитий и грантов.",
-};
+export async function generateMetadata({ params }: { params: Promise<{locale: string}> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'ComparePage' });
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+  };
+}
 
-export default function ComparePage() {
+export default async function ComparePage({ params }: { params: Promise<{locale: string}> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'ComparePage' });
+
   return (
     <>
       <Header />
@@ -21,10 +29,10 @@ export default function ComparePage() {
               <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-sm">
                 <Scale className="w-6 h-6 text-white" />
               </div>
-              <h1 className="text-3xl md:text-5xl font-serif font-bold">Сравнение колледжей</h1>
+              <h1 className="text-3xl md:text-5xl font-serif font-bold">{t('title')}</h1>
             </div>
             <p className="text-primary-100 max-w-2xl text-lg">
-              Добавьте интересующие вас колледжи в таблицу, чтобы сравнить их и сделать правильный выбор.
+              {t('subtitle')}
             </p>
           </div>
         </div>

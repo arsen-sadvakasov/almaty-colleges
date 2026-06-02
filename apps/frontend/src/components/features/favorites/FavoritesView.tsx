@@ -3,10 +3,12 @@
 import { useState } from "react";
 import { MOCK_COLLEGES, MOCK_SPECIALTIES } from "@/lib/mock-data";
 import { College, Specialty } from "@/types";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { Building2, BookOpen, MapPin, Check, Trash2, HeartOff, Star } from "lucide-react";
+import { useTranslations } from 'next-intl';
 
 export function FavoritesView() {
+  const t = useTranslations('FavoritesView');
   const [activeTab, setActiveTab] = useState<"colleges" | "specialties">("colleges");
   
   // Mock favorites
@@ -33,14 +35,14 @@ export function FavoritesView() {
           onClick={() => setActiveTab("colleges")}
           className={`pb-4 px-4 text-sm font-medium transition-colors relative ${activeTab === "colleges" ? "text-primary-600" : "text-neutral-500 hover:text-neutral-900"}`}
         >
-          Колледжи ({favoriteCollegeIds.length})
+          {t('colleges', { count: favoriteCollegeIds.length })}
           {activeTab === "colleges" && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600" />}
         </button>
         <button 
           onClick={() => setActiveTab("specialties")}
           className={`pb-4 px-4 text-sm font-medium transition-colors relative ${activeTab === "specialties" ? "text-primary-600" : "text-neutral-500 hover:text-neutral-900"}`}
         >
-          Специальности ({favoriteSpecialtyIds.length})
+          {t('specialties', { count: favoriteSpecialtyIds.length })}
           {activeTab === "specialties" && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600" />}
         </button>
       </div>
@@ -77,7 +79,7 @@ export function FavoritesView() {
                   <button 
                     onClick={() => removeCollege(college.id)}
                     className="absolute top-4 right-4 p-2 text-neutral-400 hover:text-danger hover:bg-danger/10 rounded-lg transition-colors"
-                    title="Удалить из избранного"
+                    title={t('removeFromFavorites')}
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -87,10 +89,10 @@ export function FavoritesView() {
           ) : (
             <div className="text-center py-16">
               <HeartOff className="w-12 h-12 text-neutral-300 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-neutral-900 mb-2">Нет сохраненных колледжей</h3>
-              <p className="text-neutral-500 mb-6">Вы еще не добавили ни один колледж в избранное.</p>
+              <h3 className="text-lg font-medium text-neutral-900 mb-2">{t('noColleges')}</h3>
+              <p className="text-neutral-500 mb-6">{t('noCollegesDesc')}</p>
               <Link href="/colleges" className="inline-block bg-primary-50 text-primary-600 font-medium py-2 px-6 rounded-xl hover:bg-primary-100 transition-colors">
-                Перейти в каталог
+                {t('goToCatalog')}
               </Link>
             </div>
           )}
@@ -106,7 +108,7 @@ export function FavoritesView() {
                   <button 
                     onClick={() => removeSpecialty(specialty.id)}
                     className="absolute top-4 right-4 p-2 text-neutral-400 hover:text-danger hover:bg-danger/10 rounded-lg transition-colors z-10"
-                    title="Удалить из избранного"
+                    title={t('removeFromFavorites')}
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -128,7 +130,7 @@ export function FavoritesView() {
                       {specialty.description}
                     </div>
                     <div className="text-xs text-neutral-500 border-t border-neutral-100 pt-4">
-                      Квалификация: <span className="font-medium text-neutral-900">{specialty.qualification}</span>
+                      {t('qualification')} <span className="font-medium text-neutral-900">{specialty.qualification}</span>
                     </div>
                   </Link>
                 </div>
@@ -137,10 +139,10 @@ export function FavoritesView() {
           ) : (
             <div className="text-center py-16">
               <HeartOff className="w-12 h-12 text-neutral-300 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-neutral-900 mb-2">Нет сохраненных специальностей</h3>
-              <p className="text-neutral-500 mb-6">Вы еще не добавили ни одну специальность в избранное.</p>
+              <h3 className="text-lg font-medium text-neutral-900 mb-2">{t('noSpecialties')}</h3>
+              <p className="text-neutral-500 mb-6">{t('noSpecialtiesDesc')}</p>
               <Link href="/specialties" className="inline-block bg-primary-50 text-primary-600 font-medium py-2 px-6 rounded-xl hover:bg-primary-100 transition-colors">
-                Смотреть специальности
+                {t('viewSpecialties')}
               </Link>
             </div>
           )}

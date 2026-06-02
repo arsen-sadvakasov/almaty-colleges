@@ -16,6 +16,8 @@ interface CollegeType {
 }
 
 export function CollegesList({ colleges }: { colleges: CollegeType[] }) {
+  const t = useTranslations('CollegesList');
+
   const CITIES = useMemo(() => Array.from(new Set(colleges.map(c => c.city))).sort(), [colleges]);
   const SPECIALTIES = useMemo(() => {
     const all = colleges.flatMap(c => c.specialties);
@@ -73,61 +75,61 @@ export function CollegesList({ colleges }: { colleges: CollegeType[] }) {
       {/* Sidebar Filters */}
       <aside className="w-full lg:w-72 flex-shrink-0 space-y-8">
         <div className="bg-white p-6 rounded-2xl border border-neutral-200">
-          <h3 className="font-serif font-bold text-lg mb-6">Фильтры</h3>
+          <h3 className="font-serif font-bold text-lg mb-6">{t('filters')}</h3>
           
           <div className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-neutral-900 mb-2">Город</label>
+              <label className="block text-sm font-medium text-neutral-900 mb-2">{t('city')}</label>
               <select 
                 className="w-full border border-neutral-200 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
                 value={cityFilter}
                 onChange={(e) => { setCityFilter(e.target.value); setPage(1); }}
               >
-                <option value="">Все города</option>
+                <option value="">{t('allCities')}</option>
                 {CITIES.map(c => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-neutral-900 mb-2">Специальность</label>
+              <label className="block text-sm font-medium text-neutral-900 mb-2">{t('specialty')}</label>
               <select 
                 className="w-full border border-neutral-200 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
                 value={specialtyFilter}
                 onChange={(e) => { setSpecialtyFilter(e.target.value); setPage(1); }}
               >
-                <option value="">Все направления</option>
+                <option value="">{t('allSpecialties')}</option>
                 {SPECIALTIES.map(s => <option key={s} value={s}>{s}</option>)}
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-neutral-900 mb-3">Тип учреждения</label>
+              <label className="block text-sm font-medium text-neutral-900 mb-3">{t('institutionType')}</label>
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-sm cursor-pointer">
                   <input type="radio" name="type" checked={typeFilter === "all"} onChange={() => { setTypeFilter("all"); setPage(1); }} className="text-primary-500 focus:ring-primary-500" />
-                  Все
+                  {t('all')}
                 </label>
                 <label className="flex items-center gap-2 text-sm cursor-pointer">
                   <input type="radio" name="type" checked={typeFilter === "state"} onChange={() => { setTypeFilter("state"); setPage(1); }} className="text-primary-500 focus:ring-primary-500" />
-                  Государственный
+                  {t('state')}
                 </label>
                 <label className="flex items-center gap-2 text-sm cursor-pointer">
                   <input type="radio" name="type" checked={typeFilter === "private"} onChange={() => { setTypeFilter("private"); setPage(1); }} className="text-primary-500 focus:ring-primary-500" />
-                  Частный
+                  {t('private')}
                 </label>
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-neutral-900 mb-3">Дополнительно</label>
+              <label className="block text-sm font-medium text-neutral-900 mb-3">{t('additional')}</label>
               <div className="space-y-3">
                 <label className="flex items-center gap-2 text-sm cursor-pointer">
                   <input type="checkbox" checked={hasDormitory} onChange={(e) => { setHasDormitory(e.target.checked); setPage(1); }} className="rounded text-primary-500 focus:ring-primary-500" />
-                  Есть общежитие
+                  {t('hasDormitory')}
                 </label>
                 <label className="flex items-center gap-2 text-sm cursor-pointer">
                   <input type="checkbox" checked={hasGrants} onChange={(e) => { setHasGrants(e.target.checked); setPage(1); }} className="rounded text-primary-500 focus:ring-primary-500" />
-                  Есть гранты
+                  {t('hasGrants')}
                 </label>
               </div>
             </div>
@@ -143,28 +145,28 @@ export function CollegesList({ colleges }: { colleges: CollegeType[] }) {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
             <input 
               type="text" 
-              placeholder="Поиск колледжа..." 
+              placeholder={t('searchPlaceholder')}
               value={search}
               onChange={(e) => { setSearch(e.target.value); setPage(1); }}
               className="w-full pl-9 pr-4 py-2 border border-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
             />
           </div>
           <div className="flex items-center gap-2 w-full sm:w-auto">
-            <span className="text-sm text-neutral-500 whitespace-nowrap">Сортировка:</span>
+            <span className="text-sm text-neutral-500 whitespace-nowrap">{t('sortBy')}</span>
             <select 
               value={sortBy} 
               onChange={(e) => setSortBy(e.target.value as "rating" | "name")}
               className="w-full sm:w-auto border-none bg-neutral-50 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 font-medium"
             >
-              <option value="rating">По рейтингу</option>
-              <option value="name">По алфавиту</option>
+              <option value="rating">{t('byRating')}</option>
+              <option value="name">{t('byName')}</option>
             </select>
           </div>
         </div>
 
         {/* Results Info */}
         <div className="mb-6 text-neutral-500">
-          Найдено колледжей: <span className="font-bold text-neutral-900">{filteredColleges.length}</span>
+          {t('foundColleges')} <span className="font-bold text-neutral-900">{filteredColleges.length}</span>
         </div>
 
         {/* Grid */}
@@ -182,14 +184,14 @@ export function CollegesList({ colleges }: { colleges: CollegeType[] }) {
                   </div>
                   {college.hasGrants && (
                     <div className="absolute top-3 right-3 bg-success text-white text-xs font-bold px-2 py-1 rounded-md shadow-sm">
-                      Гранты
+                      {t('grants')}
                     </div>
                   )}
                 </div>
                 <div className="p-5 flex flex-col flex-grow">
                   <div className="flex justify-between items-start mb-3">
                     <div className="flex items-center gap-1.5 text-xs font-medium text-primary-500 bg-primary-50 w-fit px-2 py-1 rounded-md">
-                      {college.isState ? "Государственный" : "Частный"}
+                      {college.isState ? t('state') : t('private')}
                     </div>
                     <div className="flex items-center gap-1 text-sm font-bold text-neutral-900">
                       <Star className="w-4 h-4 fill-warning text-warning" />
@@ -207,7 +209,7 @@ export function CollegesList({ colleges }: { colleges: CollegeType[] }) {
                     {college.hasDormitory && (
                       <div className="flex items-center gap-2 text-success">
                         <Check className="w-4 h-4" />
-                        <span>Есть общежитие</span>
+                        <span>{t('hasDormitory')}</span>
                       </div>
                     )}
                   </div>
@@ -218,8 +220,8 @@ export function CollegesList({ colleges }: { colleges: CollegeType[] }) {
         ) : (
           <div className="bg-white border border-neutral-200 rounded-2xl p-12 text-center">
             <Building2 className="w-12 h-12 text-neutral-300 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-neutral-900 mb-2">Колледжи не найдены</h3>
-            <p className="text-neutral-500">Попробуйте изменить параметры фильтрации</p>
+            <h3 className="text-lg font-medium text-neutral-900 mb-2">{t('notFoundTitle')}</h3>
+            <p className="text-neutral-500">{t('notFoundSubtitle')}</p>
           </div>
         )}
 
@@ -231,7 +233,7 @@ export function CollegesList({ colleges }: { colleges: CollegeType[] }) {
               disabled={page === 1}
               className="px-4 py-2 border border-neutral-200 rounded-xl text-sm font-medium disabled:opacity-50 hover:bg-neutral-50"
             >
-              Назад
+              {t('back')}
             </button>
             <div className="flex items-center gap-1">
               {Array.from({length: totalPages}).map((_, i) => (
@@ -249,7 +251,7 @@ export function CollegesList({ colleges }: { colleges: CollegeType[] }) {
               disabled={page === totalPages}
               className="px-4 py-2 border border-neutral-200 rounded-xl text-sm font-medium disabled:opacity-50 hover:bg-neutral-50"
             >
-              Вперед
+              {t('forward')}
             </button>
           </div>
         )}

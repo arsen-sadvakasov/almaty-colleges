@@ -1,17 +1,25 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { prisma } from "@/lib/prisma";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { Calendar, ArrowRight } from "lucide-react";
+import { getTranslations } from 'next-intl/server';
 
-export const metadata = {
-  title: "Новости | Портал колледжей Алматинской области",
-  description: "Последние новости, события и объявления для абитуриентов Алматинской области.",
-};
+export async function generateMetadata({ params }: { params: Promise<{locale: string}> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'NewsPage' });
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+  };
+}
 
 export const revalidate = 60;
 
-export default async function NewsPage() {
+export default async function NewsPage({ params }: { params: Promise<{locale: string}> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'NewsPage' });
+  
   const newsList = await prisma.news.findMany({
     orderBy: { createdAt: 'desc' }
   });
@@ -23,9 +31,9 @@ export default async function NewsPage() {
         
         <div className="bg-primary-900 py-16 text-white mb-12">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-3xl md:text-5xl font-serif font-bold mb-4">Новости и события</h1>
+            <h1 className="text-3xl md:text-5xl font-serif font-bold mb-4">{t('title')}</h1>
             <p className="text-primary-100 max-w-2xl text-lg">
-              Оставайтесь в курсе последних событий в сфере образования Алматинской области.
+              {t('subtitle')}
             </p>
           </div>
         </div>
@@ -58,7 +66,7 @@ export default async function NewsPage() {
                     {news.title}
                   </h3>
                   <div className="mt-auto pt-4 flex items-center text-sm font-medium text-primary-500">
-                    Читать далее <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                    {t('readMore')} <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
               </Link>

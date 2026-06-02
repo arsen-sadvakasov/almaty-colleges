@@ -4,13 +4,21 @@ import { GpaCalculator } from "@/components/features/applicant/GpaCalculator";
 import { StepByStepGuide } from "@/components/features/applicant/StepByStepGuide";
 import { AdmissionRules, GrantsInfo } from "@/components/features/applicant/RulesAndGrants";
 import { UserCheck } from "lucide-react";
+import { getTranslations } from 'next-intl/server';
 
-export const metadata = {
-  title: "Абитуриенту | Портал колледжей Алматинской области",
-  description: "Правила приема, калькулятор среднего балла, информация о грантах и пошаговый гайд для поступления.",
-};
+export async function generateMetadata({ params }: { params: Promise<{locale: string}> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'ApplicantPage' });
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+  };
+}
 
-export default function ApplicantPage() {
+export default async function ApplicantPage({ params }: { params: Promise<{locale: string}> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'ApplicantPage' });
+
   return (
     <>
       <Header />
@@ -23,10 +31,10 @@ export default function ApplicantPage() {
               <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-sm">
                 <UserCheck className="w-6 h-6 text-white" />
               </div>
-              <h1 className="text-3xl md:text-5xl font-serif font-bold">Абитуриенту</h1>
+              <h1 className="text-3xl md:text-5xl font-serif font-bold">{t('title')}</h1>
             </div>
             <p className="text-primary-100 max-w-2xl text-lg">
-              Вся необходимая информация для успешного поступления в колледжи Алматинской области.
+              {t('subtitle')}
             </p>
           </div>
         </div>
