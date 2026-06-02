@@ -7,7 +7,16 @@ const playfair = Playfair_Display({ subsets: ["latin", "cyrillic"], variable: "-
 
 export const metadata: Metadata = {
   title: "Портал колледжей Алматинской области",
-  description: "Единый портал для абитуриентов Алматинской области",
+  description: "Единый портал для абитуриентов Алматинской области. Каталог колледжей, специальностей, проходных баллов и грантов.",
+  keywords: ["колледжи", "поступление", "гранты", "Алматинская область", "специальности", "абитуриентам"],
+  openGraph: {
+    title: "Портал колледжей Алматинской области",
+    description: "Найди свой колледж, специальность и узнай о грантах в Алматинской области.",
+    url: "https://almaty-colleges.kz",
+    siteName: "Алматы Колледждері",
+    locale: "kk_KZ",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

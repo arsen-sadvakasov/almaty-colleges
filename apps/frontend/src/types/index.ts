@@ -8,21 +8,21 @@ export interface College {
   specialties: string[];
   studentsCount: number;
   rating: number;
-  imageUrl?: string;
-  history?: string;
-  description?: string;
+  imageUrl?: string | null;
+  history?: string | null;
+  description?: string | null;
   contacts?: {
-    phone: string;
-    email: string;
-    address: string;
-    website?: string;
-    instagram?: string;
+    phone?: string | null;
+    email?: string | null;
+    address?: string | null;
+    website?: string | null;
+    instagram?: string | null;
   };
-  dormitoryInfo?: string;
-  tuitionFee?: string;
-  admissionRules?: string;
-  lastUpdated?: string;
-  dataSource?: string;
+  dormitoryInfo?: string | null;
+  tuitionFee?: string | null;
+  admissionRules?: string | null;
+  lastUpdated?: string | null;
+  dataSource?: string | null;
   gallery?: string[];
 }
 export interface Specialty {
@@ -44,5 +44,5 @@ export interface News {
   date: string;
   category: string;
   content: string;
-  imageUrl?: string;
+  imageUrl?: string | null;
 }

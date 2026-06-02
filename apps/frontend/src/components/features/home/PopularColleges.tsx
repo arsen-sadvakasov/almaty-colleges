@@ -49,7 +49,7 @@ export function PopularColleges({ colleges }: PopularCollegesProps) {
                   </div>
                   <div className="flex items-center gap-2">
                     <Users className="w-4 h-4" />
-                    <span>{college.studentCount || "Нет данных"} студентов</span>
+                    <span>{college.studentsCount || "Нет данных"} студентов</span>
                   </div>
                 </div>
               </div>

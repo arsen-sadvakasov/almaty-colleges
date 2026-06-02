@@ -1,5 +1,5 @@
 import { College } from "@/types";
-import { Building2, MapPin, Phone, Mail, Globe, Instagram, Clock, CheckCircle2, ShieldCheck, BookOpen } from "lucide-react";
+import { Building2, MapPin, Phone, Mail, Globe, Camera, Clock, CheckCircle2, ShieldCheck, BookOpen } from "lucide-react";
 import Link from "next/link";
 
 interface CollegeProfileProps {
@@ -144,7 +144,7 @@ export function CollegeProfile({ college }: CollegeProfileProps) {
                 )}
                 {college.contacts?.instagram && (
                   <li className="flex items-center gap-3 text-neutral-600">
-                    <Instagram className="w-5 h-5 text-neutral-400 flex-shrink-0" />
+                    <Camera className="w-5 h-5 text-neutral-400 flex-shrink-0" />
                     <a href={`https://instagram.com/${college.contacts.instagram.replace('@','')}`} target="_blank" rel="noreferrer" className="hover:text-primary-500">{college.contacts.instagram}</a>
                   </li>
                 )}
