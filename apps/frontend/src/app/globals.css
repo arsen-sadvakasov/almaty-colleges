@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-900: #0a2540;
+  --color-primary-500: #2563eb;
+  --color-primary-100: #dbeafe;
+  
+  --color-neutral-900: #111827;
+  --color-neutral-500: #6b7280;
+  --color-neutral-200: #e5e7eb;
+  --color-neutral-50: #f9fafb;
+
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
+}
+
+/* Custom utility classes if needed */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
