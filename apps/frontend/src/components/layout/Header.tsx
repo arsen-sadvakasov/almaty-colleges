@@ -28,6 +28,7 @@ export async function Header() {
         <div className="flex items-center gap-4">
           <Link href="/colleges" className="p-2 text-neutral-500 hover:text-primary-900 transition-colors hidden sm:block">
             <Search className="w-5 h-5" />
+
           </Link>
           
           <LanguageSwitcher />

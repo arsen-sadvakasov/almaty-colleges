@@ -15,8 +15,15 @@ export async function generateMetadata({ params }: { params: Promise<{locale: st
 
 export const revalidate = 60; // кэширование на 60 секунд
 
-export default async function CollegesPage({ params }: { params: Promise<{locale: string}> }) {
+export default async function CollegesPage({ 
+  params,
+  searchParams
+}: { 
+  params: Promise<{locale: string}>;
+  searchParams: Promise<{ q?: string }>;
+}) {
   const { locale } = await params;
+  const { q } = await searchParams;
   const t = await getTranslations({ locale, namespace: 'CollegesPage' });
 
   const collegesData = await prisma.college.findMany({
@@ -43,7 +50,7 @@ export default async function CollegesPage({ params }: { params: Promise<{locale
         </div>
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <CollegesList colleges={colleges} />
+          <CollegesList colleges={colleges} initialSearch={q} />
         </div>
       </main>
       <Footer />

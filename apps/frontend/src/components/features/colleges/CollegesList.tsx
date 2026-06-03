@@ -15,16 +15,15 @@ interface CollegeType {
   specialties: string[];
 }
 
-export function CollegesList({ colleges }: { colleges: CollegeType[] }) {
+export function CollegesList({ colleges, initialSearch = "" }: { colleges: CollegeType[], initialSearch?: string }) {
   const t = useTranslations('CollegesList');
-
   const CITIES = useMemo(() => Array.from(new Set(colleges.map(c => c.city))).sort(), [colleges]);
   const SPECIALTIES = useMemo(() => {
     const all = colleges.flatMap(c => c.specialties);
     return Array.from(new Set(all)).sort();
   }, [colleges]);
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(initialSearch);
   const [cityFilter, setCityFilter] = useState("");
   const [specialtyFilter, setSpecialtyFilter] = useState("");
   const [typeFilter, setTypeFilter] = useState<"all" | "state" | "private">("all");
