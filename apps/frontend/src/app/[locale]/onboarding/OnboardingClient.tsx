@@ -14,6 +14,8 @@ export function OnboardingClient() {
   
   const [slideIndex, setSlideIndex] = useState(0);
   const [authMode, setAuthMode] = useState<"none" | "login" | "register">("none");
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchEndX, setTouchEndX] = useState<number | null>(null);
 
   const slides = [
     {
@@ -60,6 +62,22 @@ export function OnboardingClient() {
   // The RegisterForm will need to support the inline mode. We'll add a wrapper to capture it,
   // but for now let's just render the forms.
 
+  // Swipe logic
+  const minSwipeDistance = 50;
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEndX(null);
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+  const onTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+    const distance = touchStartX - touchEndX;
+    if (distance > minSwipeDistance) handleNext();
+    if (distance < -minSwipeDistance) handlePrev();
+  };
+
   return (
     <div className="relative min-h-screen bg-neutral-50 flex items-center justify-center overflow-hidden">
       {/* Top Header */}
@@ -74,7 +92,12 @@ export function OnboardingClient() {
       </header>
 
       {/* Main Content */}
-      <div className="w-full max-w-6xl px-4 flex flex-col items-center justify-center z-10 py-16 lg:py-24 min-h-screen">
+      <div 
+        className="w-full max-w-6xl px-4 flex flex-col items-center justify-center z-10 py-16 lg:py-24 min-h-screen"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
         
         {/* Top Section: Text & Image */}
         <div className={`w-full flex flex-col lg:flex-row ${slideIndex === 1 ? 'lg:flex-row-reverse' : ''} items-center justify-between gap-8 lg:gap-20 flex-1 mt-10 lg:mt-0`}>
