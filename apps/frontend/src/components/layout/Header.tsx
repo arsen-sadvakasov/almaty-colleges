@@ -1,15 +1,16 @@
 import Link from "next/link";
-import { Search, Globe, User } from "lucide-react";
+import { Search, Globe, User, LogOut } from "lucide-react";
+import { auth, signOut } from "@/auth";
 
-export function Header() {
+export async function Header() {
+  const session = await auth();
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-neutral-200 bg-white/80 backdrop-blur-md">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary-900 rounded flex items-center justify-center text-white font-serif font-bold">
-              C
-            </div>
+            <img src="/logo.png" alt="Almaty Colleges Logo" className="h-10 w-auto object-contain" />
             <span className="font-serif font-bold text-lg text-primary-900 tracking-tight hidden sm:block">
               Almaty Colleges
             </span>
@@ -22,20 +23,39 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-4">
-          <button className="p-2 text-neutral-500 hover:text-primary-900 transition-colors hidden sm:block">
+          <Link href="/colleges" className="p-2 text-neutral-500 hover:text-primary-900 transition-colors hidden sm:block">
             <Search className="w-5 h-5" />
-          </button>
+          </Link>
           <button className="flex items-center gap-1 text-sm font-medium text-neutral-500 hover:text-primary-900 transition-colors">
             <Globe className="w-4 h-4" />
             <span className="hidden sm:inline">RU</span>
           </button>
-          <Link 
-            href="/login" 
-            className="flex items-center gap-2 bg-primary-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-900/90 transition-colors"
-          >
-            <User className="w-4 h-4" />
-            <span className="hidden sm:inline">Войти</span>
-          </Link>
+          
+          {session?.user ? (
+            <Link href="/profile" className="flex items-center gap-3 hover:bg-neutral-50 px-2 py-1.5 rounded-xl transition-colors group">
+              {session.user.image ? (
+                <img src={session.user.image} alt={session.user.name || ""} className="w-10 h-10 rounded-full object-cover border border-neutral-200" />
+              ) : (
+                <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 font-bold text-lg">
+                  {session.user.name?.charAt(0)?.toUpperCase() || "U"}
+                </div>
+              )}
+              <div className="hidden sm:flex flex-col items-start">
+                <span className="text-sm font-bold text-neutral-900 leading-none group-hover:text-primary-600 transition-colors">{session.user.name}</span>
+                {(session.user as any).iin && (
+                  <span className="text-[10px] text-neutral-500 mt-1.5 leading-none">ИИН: {(session.user as any).iin}</span>
+                )}
+              </div>
+            </Link>
+          ) : (
+            <Link 
+              href="/login" 
+              className="flex items-center gap-2 bg-primary-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-900/90 transition-colors"
+            >
+              <User className="w-4 h-4" />
+              <span className="hidden sm:inline">Войти</span>
+            </Link>
+          )}
         </div>
       </div>
     </header>
