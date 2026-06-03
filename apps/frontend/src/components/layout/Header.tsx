@@ -22,9 +22,9 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-4">
-          <button className="p-2 text-neutral-500 hover:text-primary-900 transition-colors hidden sm:block">
+          <Link href="/colleges" className="p-2 text-neutral-500 hover:text-primary-900 transition-colors hidden sm:block">
             <Search className="w-5 h-5" />
-          </button>
+          </Link>
           <button className="flex items-center gap-1 text-sm font-medium text-neutral-500 hover:text-primary-900 transition-colors">
             <Globe className="w-4 h-4" />
             <span className="hidden sm:inline">RU</span>

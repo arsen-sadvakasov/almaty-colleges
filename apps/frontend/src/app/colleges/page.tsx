@@ -10,7 +10,9 @@ export const metadata = {
 
 export const revalidate = 60; // кэширование на 60 секунд
 
-export default async function CollegesPage() {
+export default async function CollegesPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+  const q = (await searchParams).q || "";
+
   const collegesData = await prisma.college.findMany({
     include: { specialties: true },
     orderBy: { rating: 'desc' }
@@ -35,7 +37,7 @@ export default async function CollegesPage() {
         </div>
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <CollegesList colleges={colleges} />
+          <CollegesList colleges={colleges} initialSearch={q} />
         </div>
       </main>
       <Footer />
