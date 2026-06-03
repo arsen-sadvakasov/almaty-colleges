@@ -48,13 +48,21 @@ export async function Header() {
               </div>
             </Link>
           ) : (
-            <Link 
-              href="/login" 
-              className="flex items-center gap-2 bg-primary-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-900/90 transition-colors"
-            >
-              <User className="w-4 h-4" />
-              <span className="hidden sm:inline">Войти</span>
-            </Link>
+            <div className="flex items-center gap-2">
+              <Link 
+                href="/login" 
+                className="flex items-center gap-2 bg-neutral-100 text-neutral-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-neutral-200 transition-colors"
+              >
+                <User className="w-4 h-4" />
+                <span className="hidden sm:inline">Войти</span>
+              </Link>
+              <Link 
+                href="/register" 
+                className="flex items-center gap-2 bg-primary-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-900/90 transition-colors"
+              >
+                <span className="hidden sm:inline">Регистрация</span>
+              </Link>
+            </div>
           )}
         </div>
       </div>

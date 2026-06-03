@@ -63,7 +63,10 @@ export async function registerUser(prevState: any, formData: FormData) {
 
 export async function authenticate(prevState: any, formData: FormData) {
   try {
-    await signIn("credentials", formData);
+    await signIn("credentials", {
+      ...Object.fromEntries(formData),
+      redirectTo: "/",
+    });
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
