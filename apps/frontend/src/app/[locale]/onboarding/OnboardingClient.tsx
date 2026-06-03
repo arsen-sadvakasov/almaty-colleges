@@ -68,99 +68,110 @@ export function OnboardingClient() {
       </header>
 
       {/* Main Content */}
-      <div className="w-full max-w-6xl px-4 flex flex-col lg:flex-row items-center justify-between gap-12 z-10 py-20 lg:py-0">
+      <div className="w-full max-w-6xl px-4 flex flex-col items-center justify-center z-10 py-24 min-h-screen">
         
-        {/* Left Side: Slider */}
-        <div className="w-full lg:w-1/2 flex flex-col items-start h-[400px] justify-center relative">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={slideIndex}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.4 }}
-              className="w-full"
-            >
-              <h1 className="text-4xl md:text-5xl font-serif font-bold text-neutral-900 mb-6 leading-tight">
-                {slides[slideIndex].title}
-              </h1>
-              <p className="text-lg md:text-xl text-neutral-600 mb-8 max-w-lg leading-relaxed">
-                {slides[slideIndex].text}
-              </p>
-            </motion.div>
-          </AnimatePresence>
+        {/* Top Section: Text & Image */}
+        <div className={`w-full flex flex-col lg:flex-row ${slideIndex === 1 ? 'lg:flex-row-reverse' : ''} items-center justify-between gap-12 lg:gap-20 flex-1`}>
+          
+          {/* Text Container */}
+          <motion.div layout className="w-full lg:w-1/2 flex flex-col items-start justify-center relative min-h-[250px]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={slideIndex}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4 }}
+                className="w-full"
+              >
+                <h1 className="text-4xl md:text-5xl font-serif font-bold text-neutral-900 mb-6 leading-tight">
+                  {slides[slideIndex].title}
+                </h1>
+                <p className="text-lg md:text-xl text-neutral-600 leading-relaxed">
+                  {slides[slideIndex].text}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
 
+          {/* Image Container */}
+          <motion.div layout className="w-full lg:w-1/2 flex justify-center relative min-h-[300px] lg:min-h-[450px]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={slideIndex}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.05 }}
+                transition={{ duration: 0.5 }}
+                className="absolute inset-0 flex items-center justify-center"
+              >
+                <div className="relative w-full max-w-md aspect-square rounded-3xl overflow-hidden shadow-2xl">
+                  <img 
+                    src={slides[slideIndex].image} 
+                    alt={slides[slideIndex].title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-primary-900/10 mix-blend-multiply" />
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
+
+        </div>
+
+        {/* Bottom Section: Dots & Buttons */}
+        <div className="w-full flex flex-col items-center justify-center mt-12 mb-8">
+          
           {/* Dots Indicator */}
-          <div className="flex items-center gap-3 mt-4">
+          <div className="flex items-center gap-3 mb-8">
             {slides.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setSlideIndex(idx)}
                 className={`transition-all duration-300 rounded-full h-2 ${
-                  slideIndex === idx ? "w-8 bg-primary-600" : "w-2 bg-neutral-300 hover:bg-primary-300"
+                  slideIndex === idx ? "w-8 bg-primary-500" : "w-2 bg-neutral-300 hover:bg-primary-500/50"
                 }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
             ))}
           </div>
 
-          <div className="mt-10 flex items-center gap-4">
-            {slideIndex < slides.length - 1 && (
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row items-center gap-6">
+            {slideIndex < slides.length - 1 ? (
               <button
                 onClick={handleNext}
-                className="flex items-center gap-2 bg-primary-100 text-primary-800 px-6 py-3 rounded-xl font-bold hover:bg-primary-200 transition-colors"
+                className="flex items-center gap-2 bg-primary-100 text-primary-900 px-8 py-3 rounded-xl font-bold hover:bg-primary-200 transition-colors"
               >
                 Далее <ArrowRight className="w-5 h-5" />
               </button>
-            )}
-            
-            {/* Small unobtrusive buttons as requested, available on all slides */}
-            <div className="flex flex-wrap items-center gap-3 mt-4 sm:mt-0">
+            ) : (
               <button
                 onClick={completeOnboardingAsGuest}
-                className="text-sm text-neutral-500 hover:text-neutral-900 font-medium transition-colors"
+                className="flex items-center gap-2 bg-primary-500 text-white px-8 py-3 rounded-xl font-bold hover:bg-primary-500/90 transition-colors shadow-lg shadow-primary-500/30"
               >
-                {t("skip")}
+                {t("skip")} <ArrowRight className="w-5 h-5" />
               </button>
-              <span className="text-neutral-300 hidden sm:inline">•</span>
+            )}
+            
+            {/* Small unobtrusive buttons */}
+            <div className="flex items-center gap-3">
               <button
                 onClick={() => setAuthMode("login")}
-                className="text-sm text-primary-600 hover:text-primary-800 font-medium transition-colors"
+                className="text-sm text-primary-500 hover:text-primary-900 font-medium transition-colors"
               >
                 {t("login")}
               </button>
-              <span className="text-neutral-300 hidden sm:inline">•</span>
+              <span className="text-neutral-300">•</span>
               <button
                 onClick={() => setAuthMode("register")}
-                className="text-sm text-primary-600 hover:text-primary-800 font-medium transition-colors"
+                className="text-sm text-primary-500 hover:text-primary-900 font-medium transition-colors"
               >
                 {t("register")}
               </button>
             </div>
           </div>
-        </div>
 
-        {/* Right Side: Image/Illustration */}
-        <div className="w-full lg:w-1/2 flex justify-center lg:justify-end relative h-[300px] sm:h-[400px] lg:h-[500px]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={slideIndex}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.05 }}
-              transition={{ duration: 0.5 }}
-              className="absolute inset-0 flex items-center justify-center lg:justify-end"
-            >
-              <div className="relative w-full max-w-md aspect-square rounded-3xl overflow-hidden shadow-2xl">
-                <img 
-                  src={slides[slideIndex].image} 
-                  alt={slides[slideIndex].title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-primary-900/10 mix-blend-multiply" />
-              </div>
-            </motion.div>
-          </AnimatePresence>
         </div>
       </div>
 
