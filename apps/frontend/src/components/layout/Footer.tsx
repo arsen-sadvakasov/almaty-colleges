@@ -6,9 +6,7 @@ export function Footer() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
         <div className="col-span-1 md:col-span-2">
           <Link href="/" className="flex items-center gap-2 mb-4">
-            <div className="w-8 h-8 bg-white rounded flex items-center justify-center text-primary-900 font-serif font-bold">
-              C
-            </div>
+            <img src="/logo.png" alt="Almaty Colleges Logo" className="h-10 w-auto object-contain bg-white rounded-lg p-1" />
             <span className="font-serif font-bold text-lg text-white tracking-tight">
               Almaty Colleges
             </span>

@@ -7,9 +7,7 @@ export function Header() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary-900 rounded flex items-center justify-center text-white font-serif font-bold">
-              C
-            </div>
+            <img src="/logo.png" alt="Almaty Colleges Logo" className="h-10 w-auto object-contain" />
             <span className="font-serif font-bold text-lg text-primary-900 tracking-tight hidden sm:block">
               Almaty Colleges
             </span>
