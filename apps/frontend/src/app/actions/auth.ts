@@ -6,6 +6,7 @@ import bcrypt from "bcrypt";
 import { AuthError } from "next-auth";
 
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 export async function registerUser(prevState: any, formData: FormData) {
   const name = formData.get("name") as string;
@@ -58,11 +59,19 @@ export async function registerUser(prevState: any, formData: FormData) {
     return { error: "Ошибка при регистрации" };
   }
   
-  redirect("/login");
+  const redirectTo = formData.get("redirectTo") as string | null;
+  if (redirectTo === "none") {
+    return { success: true };
+  }
+  
+  redirect(redirectTo || "/login");
 }
 
 export async function authenticate(prevState: any, formData: FormData) {
   try {
+    const cookieStore = await cookies();
+    cookieStore.set("onboarding_complete", "true", { path: "/", maxAge: 31536000 });
+    
     await signIn("credentials", {
       ...Object.fromEntries(formData),
       redirectTo: "/",

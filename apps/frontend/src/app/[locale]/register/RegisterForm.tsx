@@ -5,12 +5,26 @@ import { useFormStatus } from "react-dom";
 import { registerUser } from "@/app/actions/auth";
 import { useTranslations } from 'next-intl';
 
-export function RegisterForm() {
+import { useEffect } from "react";
+
+export function RegisterForm({ children, onSuccess }: { children?: React.ReactNode, onSuccess?: () => void }) {
   const [state, action] = useActionState(registerUser, undefined);
   const t = useTranslations('Auth');
 
+  useEffect(() => {
+    if (state?.success && onSuccess) {
+      onSuccess();
+    }
+  }, [state, onSuccess]);
+
   return (
     <form className="mt-8 space-y-5" action={action}>
+      {children}
+      {state?.success && !onSuccess && (
+        <div className="bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded-xl text-sm font-medium">
+          Регистрация прошла успешно. Вы можете войти.
+        </div>
+      )}
       {state?.error && (
         <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl text-sm font-medium">
           {state.error}
