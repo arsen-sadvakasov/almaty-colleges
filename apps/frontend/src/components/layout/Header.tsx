@@ -44,7 +44,7 @@ export async function Header() {
               <div className="hidden sm:flex flex-col items-start">
                 <span className="text-sm font-bold text-neutral-900 leading-none group-hover:text-primary-600 transition-colors">{session.user.name}</span>
                 {(session.user as any).iin && (
-                  <span className="text-[10px] text-neutral-500 mt-1.5 leading-none">ИИН: {(session.user as any).iin}</span>
+                  <span className="text-[10px] text-neutral-500 mt-1.5 leading-none">{t('iin')} {(session.user as any).iin}</span>
                 )}
               </div>
             </Link>
@@ -61,7 +61,7 @@ export async function Header() {
                 href="/register" 
                 className="flex items-center gap-2 bg-primary-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-900/90 transition-colors"
               >
-                <span className="hidden sm:inline">Регистрация</span>
+                <span className="hidden sm:inline">{t('register')}</span>
               </Link>
             </div>
           )}

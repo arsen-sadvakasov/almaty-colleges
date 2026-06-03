@@ -3,7 +3,9 @@
     "colleges": "Колледждер",
     "specialties": "Мамандықтар",
     "applicant": "Талапкерге",
-    "login": "Кіру"
+    "login": "Кіру",
+    "register": "Тіркелу",
+    "iin": "ЖСН:"
   },
   "Footer": {
     "description": "Алматы облысының бірыңғай білім беру порталы. Талапкерлерге дұрыс таңдау жасауға көмектесеміз.",
@@ -299,5 +301,42 @@
     "newsPhoto": "Жаңалық фотосы",
     "dummyParagraph1": "Білім беру инфрақұрылымын жаңғырту бағдарламасы аясында студенттерді жайлы өмір сүру және оқу жағдайларымен қамтамасыз ету жұмыстары жалғасуда. Жаңа зертханалар мен құзыреттілік орталықтары түлектерге еңбек нарығының заманауи талаптарына барынша дайын болуға мүмкіндік береді.",
     "dummyParagraph2": "Маңызды күндер мен өтініш беру мерзімдерін жіберіп алмау үшін біздің порталдағы жаңартуларды бақылап отырыңыз!"
+  },
+  "Auth": {
+    "loginTitle": "Кіру",
+    "loginWelcome": "Қайта оралуыңызбен!",
+    "loginSubtitle": "Колледждер мен мамандықтарды сақтау үшін аккаунтыңызға кіріңіз",
+    "noAccount": "Аккаунтыңыз жоқ па?",
+    "registerLink": "Тіркелу",
+    "registerTitle": "Тіркелу",
+    "registerWelcome": "Аккаунт жасау",
+    "registerSubtitle": "Алматы облысы колледждерінің порталына қосылыңыз",
+    "hasAccount": "Аккаунтыңыз бар ма?",
+    "loginLink": "Кіру",
+    "identifierLabel": "Email немесе Телефон нөмірі",
+    "identifierPlaceholder": "test@example.com немесе +77000000000",
+    "passwordLabel": "Құпиясөз",
+    "passwordPlaceholder": "••••••••",
+    "loginButton": "Кіру",
+    "loginButtonPending": "Кіру...",
+    "nameLabel": "Толық аты-жөні (ТАӘ)",
+    "namePlaceholder": "Алиев Али Алиұлы",
+    "iinLabel": "ЖСН",
+    "iinPlaceholder": "123456789012",
+    "emailLabel": "Email",
+    "emailPlaceholder": "test@example.com",
+    "phoneLabel": "Телефон нөмірі",
+    "phonePlaceholder": "+77000000000",
+    "confirmPasswordLabel": "Құпиясөзді қайталаңыз",
+    "confirmPasswordPlaceholder": "••••••••",
+    "registerButton": "Тіркелу",
+    "registerButtonPending": "Тіркелу...",
+    "profileTitle": "Жеке кабинет",
+    "logout": "Аккаунттан шығу",
+    "iin": "ЖСН",
+    "notSpecified": "Көрсетілмеген",
+    "contacts": "Email / Байланыстар",
+    "myFavorites": "Менің таңдаулыларым",
+    "noFavorites": "Сізде әзірге сақталған колледждер мен мамандықтар жоқ."
   }
 }

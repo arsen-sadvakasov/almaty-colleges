@@ -1,13 +1,19 @@
-import Link from "next/link";
+import { Link } from '@/i18n/routing';
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { RegisterForm } from "./RegisterForm";
+import { getTranslations } from 'next-intl/server';
 
-export const metadata = {
-  title: "Регистрация | Портал колледжей Алматинской области",
-};
+export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
+  const t = await getTranslations({ locale, namespace: 'Auth' });
+  return {
+    title: `${t('registerTitle')} | Портал колледжей Алматинской области`,
+  };
+}
 
-export default function RegisterPage() {
+export default async function RegisterPage() {
+  const t = await getTranslations('Auth');
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
@@ -15,10 +21,10 @@ export default function RegisterPage() {
         <div className="max-w-2xl w-full bg-white p-8 sm:p-10 rounded-3xl shadow-xl border border-neutral-100">
           <div className="text-center">
             <h2 className="text-3xl font-serif font-bold text-neutral-900">
-              Создать аккаунт
+              {t('registerWelcome')}
             </h2>
             <p className="mt-3 text-sm text-neutral-500">
-              Присоединяйтесь к порталу колледжей Алматинской области
+              {t('registerSubtitle')}
             </p>
           </div>
           
@@ -26,9 +32,9 @@ export default function RegisterPage() {
 
           <div className="text-center mt-8 pt-6 border-t border-neutral-100">
             <p className="text-sm text-neutral-600">
-              Уже есть аккаунт?{' '}
+              {t('hasAccount')}{' '}
               <Link href="/login" className="font-bold text-primary-600 hover:text-primary-700 transition-colors">
-                Войти
+                {t('loginLink')}
               </Link>
             </p>
           </div>

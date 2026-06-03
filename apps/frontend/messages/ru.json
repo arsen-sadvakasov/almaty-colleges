@@ -3,7 +3,9 @@
     "colleges": "Колледжи",
     "specialties": "Специальности",
     "applicant": "Абитуриенту",
-    "login": "Войти"
+    "login": "Войти",
+    "register": "Регистрация",
+    "iin": "ИИН:"
   },
   "Footer": {
     "description": "Единый образовательный портал Алматинской области. Помогаем абитуриентам сделать правильный выбор.",
@@ -299,5 +301,42 @@
     "newsPhoto": "Фото новости",
     "dummyParagraph1": "В рамках программы модернизации образовательной инфраструктуры продолжается работа по обеспечению студентов комфортными условиями проживания и обучения. Новые лаборатории и центры компетенций позволят выпускникам быть максимально подготовленными к современным требованиям рынка труда.",
     "dummyParagraph2": "Следите за обновлениями на нашем портале, чтобы не пропустить важные даты и сроки подачи заявлений!"
+  },
+  "Auth": {
+    "loginTitle": "Вход",
+    "loginWelcome": "С возвращением!",
+    "loginSubtitle": "Войдите в свой аккаунт, чтобы сохранять колледжи и специальности",
+    "noAccount": "Нет аккаунта?",
+    "registerLink": "Зарегистрироваться",
+    "registerTitle": "Регистрация",
+    "registerWelcome": "Создать аккаунт",
+    "registerSubtitle": "Присоединяйтесь к порталу колледжей Алматинской области",
+    "hasAccount": "Уже есть аккаунт?",
+    "loginLink": "Войти",
+    "identifierLabel": "Email или Номер телефона",
+    "identifierPlaceholder": "test@example.com или +77000000000",
+    "passwordLabel": "Пароль",
+    "passwordPlaceholder": "••••••••",
+    "loginButton": "Войти",
+    "loginButtonPending": "Вход...",
+    "nameLabel": "Полное имя (ФИО)",
+    "namePlaceholder": "Иванов Иван Иванович",
+    "iinLabel": "ИИН",
+    "iinPlaceholder": "123456789012",
+    "emailLabel": "Email",
+    "emailPlaceholder": "test@example.com",
+    "phoneLabel": "Номер телефона",
+    "phonePlaceholder": "+77000000000",
+    "confirmPasswordLabel": "Повторите пароль",
+    "confirmPasswordPlaceholder": "••••••••",
+    "registerButton": "Зарегистрироваться",
+    "registerButtonPending": "Регистрация...",
+    "profileTitle": "Личный кабинет",
+    "logout": "Выйти из аккаунта",
+    "iin": "ИИН",
+    "notSpecified": "Не указан",
+    "contacts": "Email / Контакты",
+    "myFavorites": "Моё избранное",
+    "noFavorites": "У вас пока нет сохраненных колледжей и специальностей."
   }
 }

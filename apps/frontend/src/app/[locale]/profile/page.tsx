@@ -2,13 +2,18 @@ import { auth, signOut } from "@/auth";
 import { redirect } from "next/navigation";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { getTranslations } from 'next-intl/server';
 
-export const metadata = {
-  title: "Личный кабинет | Портал колледжей Алматинской области",
-};
+export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
+  const t = await getTranslations({ locale, namespace: 'Auth' });
+  return {
+    title: `${t('profileTitle')} | Портал колледжей Алматинской области`,
+  };
+}
 
 export default async function ProfilePage() {
   const session = await auth();
+  const t = await getTranslations('Auth');
 
   if (!session?.user) {
     redirect("/login");
@@ -45,7 +50,7 @@ export default async function ProfilePage() {
                 </div>
                 <form action={handleLogout}>
                   <button type="submit" className="px-4 py-2 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-medium rounded-xl transition-colors text-sm">
-                    Выйти из аккаунта
+                    {t('logout')}
                   </button>
                 </form>
               </div>
@@ -54,12 +59,12 @@ export default async function ProfilePage() {
                 <h1 className="text-3xl font-serif font-bold text-neutral-900">{session.user.name}</h1>
                 <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-neutral-50 p-4 rounded-2xl border border-neutral-100">
-                    <span className="text-xs text-neutral-500 uppercase tracking-wider font-medium">ИИН</span>
-                    <p className="text-neutral-900 font-medium mt-1">{(session.user as any).iin || "Не указан"}</p>
+                    <span className="text-xs text-neutral-500 uppercase tracking-wider font-medium">{t('iin')}</span>
+                    <p className="text-neutral-900 font-medium mt-1">{(session.user as any).iin || t('notSpecified')}</p>
                   </div>
                   <div className="bg-neutral-50 p-4 rounded-2xl border border-neutral-100">
-                    <span className="text-xs text-neutral-500 uppercase tracking-wider font-medium">Email / Контакты</span>
-                    <p className="text-neutral-900 font-medium mt-1">{session.user.email || "Не указан"}</p>
+                    <span className="text-xs text-neutral-500 uppercase tracking-wider font-medium">{t('contacts')}</span>
+                    <p className="text-neutral-900 font-medium mt-1">{session.user.email || t('notSpecified')}</p>
                   </div>
                 </div>
               </div>
@@ -67,8 +72,8 @@ export default async function ProfilePage() {
           </div>
 
           <div className="mt-8 bg-white rounded-3xl shadow-sm border border-neutral-200 p-8">
-            <h2 className="text-2xl font-serif font-bold text-neutral-900 mb-6">Моё избранное</h2>
-            <p className="text-neutral-500 text-center py-12">У вас пока нет сохраненных колледжей и специальностей.</p>
+            <h2 className="text-2xl font-serif font-bold text-neutral-900 mb-6">{t('myFavorites')}</h2>
+            <p className="text-neutral-500 text-center py-12">{t('noFavorites')}</p>
           </div>
         </div>
       </main>

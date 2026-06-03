@@ -3,9 +3,11 @@
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { registerUser } from "@/app/actions/auth";
+import { useTranslations } from 'next-intl';
 
 export function RegisterForm() {
   const [state, action] = useActionState(registerUser, undefined);
+  const t = useTranslations('Auth');
 
   return (
     <form className="mt-8 space-y-5" action={action}>
@@ -16,18 +18,18 @@ export function RegisterForm() {
       )}
       <div className="space-y-4">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-neutral-700">Полное имя (ФИО)</label>
+          <label htmlFor="name" className="block text-sm font-medium text-neutral-700">{t('nameLabel')}</label>
           <input
             id="name"
             name="name"
             type="text"
             required
             className="mt-1 block w-full px-4 py-3 border border-neutral-200 rounded-xl text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all sm:text-sm"
-            placeholder="Иванов Иван Иванович"
+            placeholder={t('namePlaceholder')}
           />
         </div>
         <div>
-          <label htmlFor="iin" className="block text-sm font-medium text-neutral-700">ИИН</label>
+          <label htmlFor="iin" className="block text-sm font-medium text-neutral-700">{t('iinLabel')}</label>
           <input
             id="iin"
             name="iin"
@@ -36,34 +38,34 @@ export function RegisterForm() {
             pattern="\d{12}"
             title="ИИН должен состоять из 12 цифр"
             className="mt-1 block w-full px-4 py-3 border border-neutral-200 rounded-xl text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all sm:text-sm"
-            placeholder="123456789012"
+            placeholder={t('iinPlaceholder')}
           />
         </div>
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-neutral-700">Email</label>
+          <label htmlFor="email" className="block text-sm font-medium text-neutral-700">{t('emailLabel')}</label>
           <input
             id="email"
             name="email"
             type="email"
             required
             className="mt-1 block w-full px-4 py-3 border border-neutral-200 rounded-xl text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all sm:text-sm"
-            placeholder="test@example.com"
+            placeholder={t('emailPlaceholder')}
           />
         </div>
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-neutral-700">Номер телефона</label>
+          <label htmlFor="phone" className="block text-sm font-medium text-neutral-700">{t('phoneLabel')}</label>
           <input
             id="phone"
             name="phone"
             type="tel"
             required
             className="mt-1 block w-full px-4 py-3 border border-neutral-200 rounded-xl text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all sm:text-sm"
-            placeholder="+77000000000"
+            placeholder={t('phonePlaceholder')}
           />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-neutral-700">Пароль</label>
+            <label htmlFor="password" className="block text-sm font-medium text-neutral-700">{t('passwordLabel')}</label>
             <input
               id="password"
               name="password"
@@ -71,11 +73,11 @@ export function RegisterForm() {
               required
               minLength={6}
               className="mt-1 block w-full px-4 py-3 border border-neutral-200 rounded-xl text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all sm:text-sm"
-              placeholder="••••••••"
+              placeholder={t('passwordPlaceholder')}
             />
           </div>
           <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-neutral-700">Повторите пароль</label>
+            <label htmlFor="confirmPassword" className="block text-sm font-medium text-neutral-700">{t('confirmPasswordLabel')}</label>
             <input
               id="confirmPassword"
               name="confirmPassword"
@@ -83,20 +85,20 @@ export function RegisterForm() {
               required
               minLength={6}
               className="mt-1 block w-full px-4 py-3 border border-neutral-200 rounded-xl text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all sm:text-sm"
-              placeholder="••••••••"
+              placeholder={t('confirmPasswordPlaceholder')}
             />
           </div>
         </div>
       </div>
 
       <div className="pt-2">
-        <SubmitButton />
+        <SubmitButton t={t} />
       </div>
     </form>
   );
 }
 
-function SubmitButton() {
+function SubmitButton({ t }: { t: any }) {
   const { pending } = useFormStatus();
   
   return (
@@ -105,7 +107,7 @@ function SubmitButton() {
       disabled={pending}
       className="w-full flex justify-center py-3 px-4 rounded-xl shadow-sm text-sm font-bold text-white bg-primary-900 hover:bg-primary-900/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
     >
-      {pending ? "Регистрация..." : "Зарегистрироваться"}
+      {pending ? t('registerButtonPending') : t('registerButton')}
     </button>
   );
 }
