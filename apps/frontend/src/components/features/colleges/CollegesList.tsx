@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { Search, MapPin, Building2, Check, Star } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from 'next-intl';
 
 interface CollegeType {
   id: string;

@@ -5,9 +5,14 @@ export function HeroSection() {
   const t = useTranslations('HeroSection');
 
   return (
-    <section className="relative bg-primary-900 overflow-hidden text-white pt-24 pb-32">
-      {/* Background pattern or subtle gradient can go here */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary-900 to-primary-900/80 opacity-90" />
+    <section className="relative overflow-hidden text-white pt-24 pb-32">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: 'url("/hero-bg.jpg")' }}
+      />
+      {/* Semi-transparent Overlay */}
+      <div className="absolute inset-0 bg-primary-900/80 backdrop-blur-[2px]" />
       
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold tracking-tight mb-6 max-w-4xl mx-auto leading-tight">
