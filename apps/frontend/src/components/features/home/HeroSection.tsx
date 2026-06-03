@@ -1,6 +1,9 @@
 import { Search } from "lucide-react";
+import { useTranslations } from 'next-intl';
 
 export function HeroSection() {
+  const t = useTranslations('HeroSection');
+
   return (
     <section className="relative bg-primary-900 overflow-hidden text-white pt-24 pb-32">
       {/* Background pattern or subtle gradient can go here */}
@@ -8,10 +11,10 @@ export function HeroSection() {
       
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold tracking-tight mb-6 max-w-4xl mx-auto leading-tight">
-          Открой свое будущее с лучшими колледжами Алматинской области
+          {t('title')}
         </h1>
         <p className="text-lg md:text-xl text-primary-100 max-w-2xl mx-auto mb-10 text-balance">
-          Единая платформа для абитуриентов. Найди подходящую специальность, сравни колледжи и узнай свои шансы на грант.
+          {t('subtitle')}
         </p>
         
         {/* Search Bar */}
@@ -21,19 +24,19 @@ export function HeroSection() {
           </div>
           <input 
             type="text" 
-            placeholder="Профессия, специальность или название колледжа..." 
+            placeholder={t('searchPlaceholder')}
             className="w-full bg-transparent border-none outline-none text-neutral-900 px-4 py-3 placeholder:text-neutral-400 text-lg"
           />
           <button className="bg-primary-500 hover:bg-primary-500/90 text-white px-8 py-3 rounded-xl font-medium transition-colors">
-            Найти
+            {t('searchButton')}
           </button>
         </div>
         
         <div className="mt-8 flex flex-wrap justify-center gap-4 text-sm text-primary-100 font-medium">
-          <span>Частые запросы:</span>
-          <button className="hover:text-white underline underline-offset-4">IT-технологии</button>
-          <button className="hover:text-white underline underline-offset-4">Медицина</button>
-          <button className="hover:text-white underline underline-offset-4">Педагогика</button>
+          <span>{t('frequentSearches')}</span>
+          <button className="hover:text-white underline underline-offset-4">{t('query1')}</button>
+          <button className="hover:text-white underline underline-offset-4">{t('query2')}</button>
+          <button className="hover:text-white underline underline-offset-4">{t('query3')}</button>
         </div>
       </div>
     </section>

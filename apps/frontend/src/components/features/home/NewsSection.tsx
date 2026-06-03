@@ -1,20 +1,23 @@
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { ArrowRight, Calendar } from "lucide-react";
 import { News } from "@/types";
+import { useTranslations } from 'next-intl';
 
 interface NewsSectionProps {
   newsList: News[];
 }
 
 export function NewsSection({ newsList }: NewsSectionProps) {
+  const t = useTranslations('NewsSection');
+
   return (
     <section className="py-24 bg-neutral-50 border-t border-neutral-200">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-end mb-12">
           <div>
-            <h2 className="text-3xl font-serif font-bold text-neutral-900 mb-4">Новости и события</h2>
+            <h2 className="text-3xl font-serif font-bold text-neutral-900 mb-4">{t('title')}</h2>
             <p className="text-neutral-500 max-w-2xl text-lg">
-              Актуальная информация о грантах, поступлении и жизни колледжей.
+              {t('subtitle')}
             </p>
           </div>
         </div>
@@ -45,7 +48,7 @@ export function NewsSection({ newsList }: NewsSectionProps) {
                   {news.title}
                 </h3>
                 <div className="mt-auto pt-4 flex items-center text-sm font-medium text-primary-500">
-                  Читать далее <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                  {t('readMore')} <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
             </Link>
@@ -54,7 +57,7 @@ export function NewsSection({ newsList }: NewsSectionProps) {
         
         <div className="mt-12 text-center">
           <Link href="/news" className="inline-flex items-center justify-center px-8 py-3 border border-neutral-200 rounded-xl font-medium text-neutral-900 hover:bg-neutral-100 transition-colors">
-            Все новости
+            {t('viewAll')}
           </Link>
         </div>
       </div>

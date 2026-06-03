@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Send, Bot, User, Sparkles, Loader2 } from "lucide-react";
+import { useTranslations } from 'next-intl';
 
 interface Message {
   id: string;
@@ -9,14 +10,16 @@ interface Message {
   content: string;
 }
 
-const INITIAL_MESSAGE: Message = {
-  id: "0",
-  role: "bot",
-  content: "Здравствуйте! Я виртуальный консультант портала колледжей Алматинской области. Могу помочь вам с выбором колледжа, рассказать о специальностях или условиях поступления на грант. Какой у вас вопрос?"
-};
-
 export function AiConsultant() {
-  const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
+  const t = useTranslations('AiConsultant');
+  
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: "0",
+      role: "bot",
+      content: t('initialMessage')
+    }
+  ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -47,7 +50,7 @@ export function AiConsultant() {
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "bot",
-        content: "Спасибо за ваш вопрос! На данный момент я работаю в демонстрационном режиме. В будущем я смогу подключиться к базе данных портала и предоставить точный ответ на ваш запрос, опираясь на официальные правила приема и данные колледжей."
+        content: t('mockResponse')
       };
       setMessages(prev => [...prev, botMessage]);
       setIsLoading(false);
@@ -71,9 +74,9 @@ export function AiConsultant() {
             <div className="absolute bottom-0 right-0 w-3 h-3 bg-success border-2 border-primary-900 rounded-full" />
           </div>
           <div>
-            <h2 className="font-serif font-bold text-xl">AI-Консультант</h2>
+            <h2 className="font-serif font-bold text-xl">{t('title')}</h2>
             <p className="text-primary-200 text-sm flex items-center gap-1">
-              <Sparkles className="w-3 h-3" /> На базе ИИ
+              <Sparkles className="w-3 h-3" /> {t('aiPowered')}
             </p>
           </div>
         </div>
@@ -99,7 +102,7 @@ export function AiConsultant() {
             </div>
             <div className="bg-white border border-neutral-200 p-4 rounded-2xl rounded-tl-none shadow-sm flex items-center gap-2">
               <Loader2 className="w-5 h-5 text-primary-500 animate-spin" />
-              <span className="text-neutral-500 text-sm">Печатает ответ...</span>
+              <span className="text-neutral-500 text-sm">{t('typing')}</span>
             </div>
           </div>
         )}
@@ -114,7 +117,7 @@ export function AiConsultant() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Спросите меня о поступлении..."
+            placeholder={t('placeholder')}
             className="w-full pl-6 pr-14 py-4 bg-neutral-100 border-transparent focus:bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-500 rounded-2xl transition-all"
             disabled={isLoading}
           />
@@ -127,7 +130,7 @@ export function AiConsultant() {
           </button>
         </div>
         <p className="text-center text-xs text-neutral-400 mt-3">
-          AI-Консультант может ошибаться. Уточняйте важную информацию в приемной комиссии.
+          {t('disclaimer')}
         </p>
       </div>
     </div>

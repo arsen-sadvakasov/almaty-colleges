@@ -2,18 +2,21 @@
 
 import { useState } from "react";
 import { Calculator, Plus, Trash2 } from "lucide-react";
+import { useTranslations } from 'next-intl';
 
 export function GpaCalculator() {
+  const t = useTranslations('GpaCalculator');
+
   const [subjects, setSubjects] = useState<{ id: string; name: string; grade: number }[]>([
-    { id: "1", name: "Алгебра", grade: 4 },
-    { id: "2", name: "Русский язык", grade: 4 },
-    { id: "3", name: "Казахский язык", grade: 5 },
-    { id: "4", name: "Профильный предмет 1", grade: 5 },
-    { id: "5", name: "Профильный предмет 2", grade: 4 },
+    { id: "1", name: t('subjects.algebra'), grade: 4 },
+    { id: "2", name: t('subjects.russian'), grade: 4 },
+    { id: "3", name: t('subjects.kazakh'), grade: 5 },
+    { id: "4", name: t('subjects.profile1'), grade: 5 },
+    { id: "5", name: t('subjects.profile2'), grade: 4 },
   ]);
 
   const addSubject = () => {
-    setSubjects([...subjects, { id: Math.random().toString(), name: "Новый предмет", grade: 4 }]);
+    setSubjects([...subjects, { id: Math.random().toString(), name: t('newSubject'), grade: 4 }]);
   };
 
   const removeSubject = (id: string) => {
@@ -38,8 +41,8 @@ export function GpaCalculator() {
           <Calculator className="w-8 h-8" />
         </div>
         <div>
-          <h2 className="text-2xl font-serif font-bold text-neutral-900">Калькулятор среднего балла</h2>
-          <p className="text-neutral-500">Рассчитайте средний балл аттестата для поступления</p>
+          <h2 className="text-2xl font-serif font-bold text-neutral-900">{t('title')}</h2>
+          <p className="text-neutral-500">{t('subtitle')}</p>
         </div>
       </div>
 
@@ -58,9 +61,9 @@ export function GpaCalculator() {
               onChange={(e) => updateSubject(subject.id, "grade", Number(e.target.value))}
               className="border border-neutral-200 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white min-w-[80px]"
             >
-              <option value={5}>5 (Отлично)</option>
-              <option value={4}>4 (Хорошо)</option>
-              <option value={3}>3 (Удовл.)</option>
+              <option value={5}>{t('grade5')}</option>
+              <option value={4}>{t('grade4')}</option>
+              <option value={3}>{t('grade3')}</option>
             </select>
             <button 
               onClick={() => removeSubject(subject.id)}
@@ -77,13 +80,13 @@ export function GpaCalculator() {
         onClick={addSubject}
         className="flex items-center gap-2 text-primary-500 font-medium hover:text-primary-600 transition-colors mb-8"
       >
-        <Plus className="w-4 h-4" /> Добавить предмет
+        <Plus className="w-4 h-4" /> {t('addSubject')}
       </button>
 
       <div className="bg-neutral-50 border border-neutral-200 rounded-2xl p-6 flex items-center justify-between">
         <div>
-          <div className="text-sm font-medium text-neutral-500 mb-1">Итоговый средний балл:</div>
-          <div className="text-xs text-neutral-400">На основе {subjects.length} предметов</div>
+          <div className="text-sm font-medium text-neutral-500 mb-1">{t('finalGpa')}</div>
+          <div className="text-xs text-neutral-400">{t('basedOn', { count: subjects.length })}</div>
         </div>
         <div className="text-4xl font-serif font-bold text-primary-600">
           {calculateGpa()}

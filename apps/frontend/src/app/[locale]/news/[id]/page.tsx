@@ -3,24 +3,27 @@ import { Footer } from "@/components/layout/Footer";
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { Calendar, ArrowLeft } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
+import { getTranslations } from 'next-intl/server';
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
+export async function generateMetadata({ params }: { params: Promise<{ locale: string, id: string }> }) {
+  const { locale, id } = await params;
+  const t = await getTranslations({ locale, namespace: 'NewsDetailPage' });
   const news = await prisma.news.findUnique({ where: { id } });
   
-  if (!news) return { title: "Новость не найдена" };
+  if (!news) return { title: t('metaTitleFallback') };
   
   return {
-    title: `${news.title} | Новости Алматинской области`,
+    title: `${news.title}${t('metaTitleSuffix')}`,
     description: news.content.slice(0, 150) + "...",
   };
 }
 
 export const revalidate = 60;
 
-export default async function NewsDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
+export default async function NewsDetailPage({ params }: { params: Promise<{ locale: string, id: string }> }) {
+  const { locale, id } = await params;
+  const t = await getTranslations({ locale, namespace: 'NewsDetailPage' });
   const news = await prisma.news.findUnique({ where: { id } });
 
   if (!news) {
@@ -34,7 +37,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
           
           <Link href="/news" className="inline-flex items-center gap-2 text-neutral-500 hover:text-primary-600 transition-colors mb-8 font-medium">
-            <ArrowLeft className="w-4 h-4" /> Назад к новостям
+            <ArrowLeft className="w-4 h-4" /> {t('backToNews')}
           </Link>
 
           <article className="bg-white rounded-3xl border border-neutral-200 overflow-hidden shadow-sm">
@@ -44,7 +47,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
               )}
               {!news.imageUrl && (
                 <div className="absolute inset-0 bg-primary-900/5 flex items-center justify-center">
-                   <span className="text-primary-900/20 font-serif font-bold text-4xl">Фото новости</span>
+                   <span className="text-primary-900/20 font-serif font-bold text-4xl">{t('newsPhoto')}</span>
                 </div>
               )}
             </div>
@@ -65,10 +68,10 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
               <div className="prose prose-lg prose-neutral max-w-none text-neutral-700 leading-relaxed">
                 <p>{news.content}</p>
                 <p>
-                  В рамках программы модернизации образовательной инфраструктуры продолжается работа по обеспечению студентов комфортными условиями проживания и обучения. Новые лаборатории и центры компетенций позволят выпускникам быть максимально подготовленными к современным требованиям рынка труда.
+                  {t('dummyParagraph1')}
                 </p>
                 <p>
-                  Следите за обновлениями на нашем портале, чтобы не пропустить важные даты и сроки подачи заявлений!
+                  {t('dummyParagraph2')}
                 </p>
               </div>
             </div>

@@ -1,8 +1,11 @@
-import Link from "next/link";
-import { Search, Globe, User, LogOut } from "lucide-react";
-import { auth, signOut } from "@/auth";
+import { Search, User } from "lucide-react";
+import { getTranslations } from 'next-intl/server';
+import { LanguageSwitcher } from '../features/i18n/LanguageSwitcher';
+import { Link } from '@/i18n/routing';
+import { auth } from "@/auth";
 
 export async function Header() {
+  const t = await getTranslations('Header');
   const session = await auth();
 
   return (
@@ -16,9 +19,9 @@ export async function Header() {
             </span>
           </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-neutral-500">
-            <Link href="/colleges" className="hover:text-primary-900 transition-colors">Колледжи</Link>
-            <Link href="/specialties" className="hover:text-primary-900 transition-colors">Специальности</Link>
-            <Link href="/applicant" className="hover:text-primary-900 transition-colors">Абитуриенту</Link>
+            <Link href="/colleges" className="hover:text-primary-900 transition-colors">{t('colleges')}</Link>
+            <Link href="/specialties" className="hover:text-primary-900 transition-colors">{t('specialties')}</Link>
+            <Link href="/applicant" className="hover:text-primary-900 transition-colors">{t('applicant')}</Link>
           </nav>
         </div>
 
@@ -26,11 +29,9 @@ export async function Header() {
           <Link href="/colleges" className="p-2 text-neutral-500 hover:text-primary-900 transition-colors hidden sm:block">
             <Search className="w-5 h-5" />
           </Link>
-          <button className="flex items-center gap-1 text-sm font-medium text-neutral-500 hover:text-primary-900 transition-colors">
-            <Globe className="w-4 h-4" />
-            <span className="hidden sm:inline">RU</span>
-          </button>
           
+          <LanguageSwitcher />
+
           {session?.user ? (
             <Link href="/profile" className="flex items-center gap-3 hover:bg-neutral-50 px-2 py-1.5 rounded-xl transition-colors group">
               {session.user.image ? (
@@ -54,7 +55,7 @@ export async function Header() {
                 className="flex items-center gap-2 bg-neutral-100 text-neutral-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-neutral-200 transition-colors"
               >
                 <User className="w-4 h-4" />
-                <span className="hidden sm:inline">Войти</span>
+                <span className="hidden sm:inline">{t('login')}</span>
               </Link>
               <Link 
                 href="/register" 

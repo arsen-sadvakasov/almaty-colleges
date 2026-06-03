@@ -1,12 +1,15 @@
 import { College } from "@/types";
 import { Building2, MapPin, Phone, Mail, Globe, Camera, Clock, CheckCircle2, ShieldCheck, BookOpen } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
+import { useTranslations } from 'next-intl';
 
 interface CollegeProfileProps {
   college: College;
 }
 
 export function CollegeProfile({ college }: CollegeProfileProps) {
+  const t = useTranslations('CollegeProfile');
+
   return (
     <div className="bg-neutral-50 min-h-screen">
       {/* Hero Section */}
@@ -14,7 +17,7 @@ export function CollegeProfile({ college }: CollegeProfileProps) {
         <div className="absolute inset-0 bg-black/20" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Link href="/colleges" className="text-primary-200 hover:text-white transition-colors mb-6 inline-block font-medium">
-            &larr; Назад в каталог
+            {t('back')}
           </Link>
           <div className="flex flex-col md:flex-row gap-8 items-start md:items-end">
             <div className="w-24 h-24 sm:w-32 sm:h-32 bg-white rounded-2xl flex items-center justify-center flex-shrink-0 shadow-xl overflow-hidden">
@@ -23,23 +26,23 @@ export function CollegeProfile({ college }: CollegeProfileProps) {
             <div className="flex-1">
               <div className="flex flex-wrap gap-2 mb-4">
                 <span className="bg-white/10 px-3 py-1 rounded-lg text-sm font-medium backdrop-blur-sm">
-                  {college.isState ? "Государственный" : "Частный"}
+                  {college.isState ? t('state') : t('private')}
                 </span>
                 {college.hasGrants && (
                   <span className="bg-success px-3 py-1 rounded-lg text-sm font-bold shadow-sm">
-                    Есть гранты
+                    {t('hasGrants')}
                   </span>
                 )}
                 {college.hasDormitory && (
                   <span className="bg-white/10 px-3 py-1 rounded-lg text-sm font-medium backdrop-blur-sm">
-                    Общежитие
+                    {t('dormitory')}
                   </span>
                 )}
               </div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4">{college.name}</h1>
               <div className="flex items-center gap-4 text-primary-100 text-sm">
                 <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> {college.city}</span>
-                <span className="flex items-center gap-1"><ShieldCheck className="w-4 h-4" /> Лицензия МОН РК</span>
+                <span className="flex items-center gap-1"><ShieldCheck className="w-4 h-4" /> {t('license')}</span>
               </div>
             </div>
           </div>
@@ -53,12 +56,12 @@ export function CollegeProfile({ college }: CollegeProfileProps) {
           <div className="lg:col-span-2 space-y-8">
             {/* About */}
             <div className="bg-white p-8 rounded-2xl border border-neutral-200 shadow-sm">
-              <h2 className="text-2xl font-serif font-bold text-neutral-900 mb-6">О колледже</h2>
+              <h2 className="text-2xl font-serif font-bold text-neutral-900 mb-6">{t('aboutTitle')}</h2>
               <div className="prose prose-neutral max-w-none">
-                <p className="text-lg text-neutral-600 mb-4">{college.description || "Информация о колледже обновляется."}</p>
+                <p className="text-lg text-neutral-600 mb-4">{college.description || t('aboutEmpty')}</p>
                 {college.history && (
                   <>
-                    <h3 className="text-xl font-bold mt-6 mb-3">История</h3>
+                    <h3 className="text-xl font-bold mt-6 mb-3">{t('historyTitle')}</h3>
                     <p className="text-neutral-600">{college.history}</p>
                   </>
                 )}
@@ -67,7 +70,7 @@ export function CollegeProfile({ college }: CollegeProfileProps) {
 
             {/* Specialties */}
             <div className="bg-white p-8 rounded-2xl border border-neutral-200 shadow-sm">
-              <h2 className="text-2xl font-serif font-bold text-neutral-900 mb-6">Специальности ({college.specialties.length})</h2>
+              <h2 className="text-2xl font-serif font-bold text-neutral-900 mb-6">{t('specialtiesTitle', { count: college.specialties.length })}</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {college.specialties.map((spec, i) => (
                   <div key={i} className="flex items-start gap-3 p-4 border border-neutral-100 bg-neutral-50 rounded-xl hover:border-primary-200 transition-colors cursor-pointer group">
@@ -76,7 +79,7 @@ export function CollegeProfile({ college }: CollegeProfileProps) {
                     </div>
                     <div>
                       <h4 className="font-medium text-neutral-900">{spec}</h4>
-                      <p className="text-sm text-neutral-500">Грант / Платно</p>
+                      <p className="text-sm text-neutral-500">{t('grantOrPaid')}</p>
                     </div>
                   </div>
                 ))}
@@ -85,26 +88,26 @@ export function CollegeProfile({ college }: CollegeProfileProps) {
 
             {/* Admissions & Tuition */}
             <div className="bg-white p-8 rounded-2xl border border-neutral-200 shadow-sm">
-              <h2 className="text-2xl font-serif font-bold text-neutral-900 mb-6">Поступление и условия</h2>
+              <h2 className="text-2xl font-serif font-bold text-neutral-900 mb-6">{t('admissionsTitle')}</h2>
               <div className="space-y-6">
                 <div>
                   <h3 className="font-bold text-neutral-900 mb-2 flex items-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-success" /> Правила приема
+                    <CheckCircle2 className="w-5 h-5 text-success" /> {t('rulesTitle')}
                   </h3>
-                  <p className="text-neutral-600 ml-7">{college.admissionRules || "На базе 9 и 11 классов."}</p>
+                  <p className="text-neutral-600 ml-7">{college.admissionRules || t('rulesEmpty')}</p>
                 </div>
                 <div>
                   <h3 className="font-bold text-neutral-900 mb-2 flex items-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-success" /> Стоимость обучения
+                    <CheckCircle2 className="w-5 h-5 text-success" /> {t('tuitionTitle')}
                   </h3>
-                  <p className="text-neutral-600 ml-7">{college.tuitionFee || "Уточняйте в приемной комиссии."}</p>
+                  <p className="text-neutral-600 ml-7">{college.tuitionFee || t('tuitionEmpty')}</p>
                 </div>
                 {college.hasDormitory && (
                   <div>
                     <h3 className="font-bold text-neutral-900 mb-2 flex items-center gap-2">
-                      <CheckCircle2 className="w-5 h-5 text-success" /> Общежитие
+                      <CheckCircle2 className="w-5 h-5 text-success" /> {t('dormitoryTitle')}
                     </h3>
-                    <p className="text-neutral-600 ml-7">{college.dormitoryInfo || "Предоставляется иногородним студентам."}</p>
+                    <p className="text-neutral-600 ml-7">{college.dormitoryInfo || t('dormitoryEmpty')}</p>
                   </div>
                 )}
               </div>
@@ -115,7 +118,7 @@ export function CollegeProfile({ college }: CollegeProfileProps) {
           <div className="space-y-8">
             {/* Contacts Card */}
             <div className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm sticky top-24">
-              <h3 className="font-serif font-bold text-xl text-neutral-900 mb-6">Контакты</h3>
+              <h3 className="font-serif font-bold text-xl text-neutral-900 mb-6">{t('contactsTitle')}</h3>
               
               <ul className="space-y-4">
                 {college.contacts?.address && (
@@ -151,14 +154,14 @@ export function CollegeProfile({ college }: CollegeProfileProps) {
               </ul>
 
               <button className="w-full mt-8 bg-primary-500 hover:bg-primary-600 text-white font-medium py-3 rounded-xl transition-colors">
-                Сохранить в избранное
+                {t('saveFavorite')}
               </button>
             </div>
             
             {/* Meta Info */}
             <div className="text-xs text-neutral-400 text-center flex flex-col gap-1">
-              {college.lastUpdated && <span className="flex items-center justify-center gap-1"><Clock className="w-3 h-3" /> Обновлено: {college.lastUpdated}</span>}
-              {college.dataSource && <span>Источник данных: {college.dataSource}</span>}
+              {college.lastUpdated && <span className="flex items-center justify-center gap-1"><Clock className="w-3 h-3" /> {t('updatedAt', { date: college.lastUpdated })}</span>}
+              {college.dataSource && <span>{t('dataSource', { source: college.dataSource })}</span>}
             </div>
           </div>
 

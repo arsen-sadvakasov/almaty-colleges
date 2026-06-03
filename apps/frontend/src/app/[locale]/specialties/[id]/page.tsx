@@ -4,16 +4,18 @@ import { SpecialtyProfile } from "@/components/features/specialties/SpecialtyPro
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { Specialty, College } from "@/types";
+import { getTranslations } from 'next-intl/server';
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
+export async function generateMetadata({ params }: { params: Promise<{ id: string, locale: string }> }) {
+  const { id, locale } = await params;
   const specialty = await prisma.specialty.findUnique({ where: { id } });
+  const t = await getTranslations({ locale, namespace: 'SpecialtyDetailPage' });
   
-  if (!specialty) return { title: "Специальность не найдена" };
+  if (!specialty) return { title: t('notFound') };
   
   return {
-    title: `${specialty.name} | Портал колледжей Алматинской области`,
-    description: specialty.description,
+    title: t('metaTitle', { name: specialty.name }),
+    description: specialty.description || t('metaDescription', { description: specialty.description }),
   };
 }
 

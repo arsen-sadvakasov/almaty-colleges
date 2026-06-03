@@ -1,6 +1,9 @@
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
+import { useTranslations } from 'next-intl';
 
 export function Footer() {
+  const t = useTranslations('Footer');
+
   return (
     <footer className="bg-primary-900 text-neutral-200 py-12 mt-auto">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -14,33 +17,33 @@ export function Footer() {
             </span>
           </Link>
           <p className="text-sm text-neutral-400 max-w-sm">
-            Единый образовательный портал Алматинской области. Помогаем абитуриентам сделать правильный выбор.
+            {t('description')}
           </p>
         </div>
         
         <div>
-          <h3 className="font-medium text-white mb-4">Навигация</h3>
+          <h3 className="font-medium text-white mb-4">{t('navigation')}</h3>
           <ul className="space-y-2 text-sm text-neutral-400">
-            <li><Link href="/colleges" className="hover:text-white transition-colors">Каталог колледжей</Link></li>
-            <li><Link href="/specialties" className="hover:text-white transition-colors">Специальности</Link></li>
-            <li><Link href="/applicant" className="hover:text-white transition-colors">Абитуриенту</Link></li>
-            <li><Link href="/faq" className="hover:text-white transition-colors">FAQ</Link></li>
+            <li><Link href="/colleges" className="hover:text-white transition-colors">{t('colleges')}</Link></li>
+            <li><Link href="/specialties" className="hover:text-white transition-colors">{t('specialties')}</Link></li>
+            <li><Link href="/applicant" className="hover:text-white transition-colors">{t('applicant')}</Link></li>
+            <li><Link href="/" className="hover:text-white transition-colors">{t('faq')}</Link></li>
           </ul>
         </div>
 
         <div>
-          <h3 className="font-medium text-white mb-4">Контакты</h3>
+          <h3 className="font-medium text-white mb-4">{t('contacts')}</h3>
           <ul className="space-y-2 text-sm text-neutral-400">
-            <li>Email: info@almaty-colleges.kz</li>
-            <li>Телефон: +7 (700) 000-00-00</li>
-            <li>г. Конаев, ул. Индустриальная 1</li>
+            <li>{t('email')}: info@almaty-colleges.kz</li>
+            <li>{t('phone')}: +7 (700) 000-00-00</li>
+            <li>{t('address')}</li>
           </ul>
         </div>
       </div>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-neutral-700/50 text-sm text-neutral-500 flex flex-col sm:flex-row justify-between items-center">
-        <p>© {new Date().getFullYear()} Портал колледжей Алматинской области. Все права защищены.</p>
+        <p>© {new Date().getFullYear()} {t('rights')}</p>
         <div className="flex gap-4 mt-4 sm:mt-0">
-          <Link href="/privacy" className="hover:text-white transition-colors">Политика конфиденциальности</Link>
+          <Link href="/" className="hover:text-white transition-colors">{t('privacy')}</Link>
         </div>
       </div>
     </footer>

@@ -1,17 +1,24 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { prisma } from "@/lib/prisma";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { BookOpen, GraduationCap, ChevronRight } from "lucide-react";
+import { getTranslations } from 'next-intl/server';
 
-export const metadata = {
-  title: "Специальности | Портал колледжей Алматинской области",
-  description: "Каталог специальностей и профессий для поступления в колледжи",
-};
+export async function generateMetadata({ params }: { params: Promise<{locale: string}> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'SpecialtiesPage' });
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+  };
+}
 
 export const revalidate = 60;
 
-export default async function SpecialtiesPage() {
+export default async function SpecialtiesPage({ params }: { params: Promise<{locale: string}> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'SpecialtiesPage' });
   const specialties = await prisma.specialty.findMany({
     orderBy: { name: 'asc' }
   });
@@ -22,9 +29,9 @@ export default async function SpecialtiesPage() {
       <main className="flex-1">
         <div className="bg-primary-900 py-12 text-white">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-3xl md:text-4xl font-serif font-bold mb-4">Специальности</h1>
+            <h1 className="text-3xl md:text-4xl font-serif font-bold mb-4">{t('title')}</h1>
             <p className="text-primary-100 max-w-2xl text-lg">
-              Изучите доступные направления обучения, узнайте о перспективах трудоустройства и выберите будущую профессию.
+              {t('subtitle')}
             </p>
           </div>
         </div>
@@ -42,7 +49,7 @@ export default async function SpecialtiesPage() {
                     <BookOpen className="w-6 h-6" />
                   </div>
                   <span className="text-xs font-bold text-neutral-400 bg-neutral-100 px-2 py-1 rounded">
-                    Код: {specialty.code}
+                    {t('code', { code: specialty.code })}
                   </span>
                 </div>
                 

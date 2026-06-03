@@ -1,24 +1,27 @@
 import { Building2, MapPin, Users } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { College } from "@/types";
+import { useTranslations } from 'next-intl';
 
 interface PopularCollegesProps {
   colleges: College[];
 }
 
 export function PopularColleges({ colleges }: PopularCollegesProps) {
+  const t = useTranslations('PopularColleges');
+
   return (
     <section className="py-24 bg-neutral-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-end mb-12">
           <div>
-            <h2 className="text-3xl font-serif font-bold text-neutral-900 mb-4">Популярные колледжи</h2>
+            <h2 className="text-3xl font-serif font-bold text-neutral-900 mb-4">{t('title')}</h2>
             <p className="text-neutral-500 max-w-2xl text-lg">
-              Учебные заведения, которые чаще всего выбирают абитуриенты в этом году.
+              {t('subtitle')}
             </p>
           </div>
           <Link href="/colleges" className="hidden sm:inline-flex items-center text-primary-500 font-medium hover:text-primary-900 transition-colors">
-            Смотреть все &rarr;
+            {t('viewAll')}
           </Link>
         </div>
 
@@ -37,7 +40,7 @@ export function PopularColleges({ colleges }: PopularCollegesProps) {
               </div>
               <div className="p-6">
                 <div className="flex items-center gap-2 text-xs font-medium text-primary-500 bg-primary-50 w-fit px-2.5 py-1 rounded-md mb-4">
-                  {college.isState ? "Государственный" : "Частный"}
+                  {college.isState ? t('state') : t('private')}
                 </div>
                 <h3 className="font-serif font-bold text-xl text-neutral-900 mb-3 group-hover:text-primary-500 transition-colors">
                   {college.name}
@@ -49,7 +52,7 @@ export function PopularColleges({ colleges }: PopularCollegesProps) {
                   </div>
                   <div className="flex items-center gap-2">
                     <Users className="w-4 h-4" />
-                    <span>{college.studentsCount || "Нет данных"} студентов</span>
+                    <span>{college.studentsCount || t('noData')} {t('students')}</span>
                   </div>
                 </div>
               </div>
