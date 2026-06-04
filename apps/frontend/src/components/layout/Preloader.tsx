@@ -15,6 +15,10 @@ export function Preloader() {
       return;
     }
 
+    // Enforce a minimum display time so the animation can be seen
+    const minDisplayTime = 7000; // 7 seconds minimum
+    const startTime = Date.now();
+
     // Simulate progress
     const interval = setInterval(() => {
       setProgress((prev) => {
@@ -22,22 +26,27 @@ export function Preloader() {
           clearInterval(interval);
           return 100;
         }
-        // Random progress increments for realistic feel
-        const increment = Math.random() * 15 + 5;
-        return Math.min(prev + increment, 90); // Stop at 90% until fully loaded
+        // Slower progress increments to stretch over 7 seconds
+        const increment = Math.random() * 5 + 2;
+        return Math.min(prev + increment, 95); // Stop at 95% until fully loaded
       });
-    }, 200);
+    }, 300);
 
-    // Complete loading when document is ready
+    // Complete loading when document is ready AND minimum time has passed
     const handleLoad = () => {
-      clearInterval(interval);
-      setProgress(100);
-      
-      // Keep it at 100% for a short moment before fading out
+      const elapsed = Date.now() - startTime;
+      const remainingTime = Math.max(0, minDisplayTime - elapsed);
+
       setTimeout(() => {
-        setLoading(false);
-        sessionStorage.setItem("hasVisitedPreloader", "true");
-      }, 500);
+        clearInterval(interval);
+        setProgress(100);
+        
+        // Keep it at 100% for a short moment before fading out
+        setTimeout(() => {
+          setLoading(false);
+          sessionStorage.setItem("hasVisitedPreloader", "true");
+        }, 500);
+      }, remainingTime);
     };
 
     if (document.readyState === "complete") {
@@ -49,7 +58,7 @@ export function Preloader() {
     // Fallback if load event doesn't fire (e.g. fast navigation)
     const fallbackTimeout = setTimeout(() => {
       handleLoad();
-    }, 3000);
+    }, 10000);
 
     return () => {
       clearInterval(interval);
