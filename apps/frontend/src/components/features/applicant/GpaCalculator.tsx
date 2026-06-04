@@ -35,14 +35,14 @@ export function GpaCalculator() {
   };
 
   return (
-    <div className="bg-white p-6 sm:p-8 rounded-3xl border border-neutral-200 shadow-sm max-w-2xl mx-auto">
+    <div className="bg-white dark:bg-neutral-900 p-6 sm:p-8 rounded-3xl border border-neutral-200 dark:border-neutral-800 shadow-sm max-w-2xl mx-auto transition-colors">
       <div className="flex items-center gap-4 mb-8">
-        <div className="bg-primary-50 p-3 rounded-2xl text-primary-500">
+        <div className="bg-primary-50 dark:bg-primary-900/30 p-3 rounded-2xl text-primary-500">
           <Calculator className="w-8 h-8" />
         </div>
         <div>
-          <h2 className="text-2xl font-serif font-bold text-neutral-900">{t('title')}</h2>
-          <p className="text-neutral-500">{t('subtitle')}</p>
+          <h2 className="text-2xl font-serif font-bold text-neutral-900 dark:text-neutral-100">{t('title')}</h2>
+          <p className="text-neutral-500 dark:text-neutral-400">{t('subtitle')}</p>
         </div>
       </div>
 
@@ -54,12 +54,12 @@ export function GpaCalculator() {
               type="text" 
               value={subject.name}
               onChange={(e) => updateSubject(subject.id, "name", e.target.value)}
-              className="flex-1 border border-neutral-200 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500"
+              className="flex-1 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-900 dark:text-neutral-100 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors"
             />
             <select
               value={subject.grade}
               onChange={(e) => updateSubject(subject.id, "grade", Number(e.target.value))}
-              className="border border-neutral-200 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white min-w-[80px]"
+              className="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-900 dark:text-neutral-100 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 min-w-[80px] transition-colors"
             >
               <option value={5}>{t('grade5')}</option>
               <option value={4}>{t('grade4')}</option>
@@ -83,9 +83,9 @@ export function GpaCalculator() {
         <Plus className="w-4 h-4" /> {t('addSubject')}
       </button>
 
-      <div className="bg-neutral-50 border border-neutral-200 rounded-2xl p-6 flex items-center justify-between">
+      <div className="bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 flex items-center justify-between transition-colors">
         <div>
-          <div className="text-sm font-medium text-neutral-500 mb-1">{t('finalGpa')}</div>
+          <div className="text-sm font-medium text-neutral-500 dark:text-neutral-400 mb-1">{t('finalGpa')}</div>
           <div className="text-xs text-neutral-400">{t('basedOn', { count: subjects.length })}</div>
         </div>
         <div className="text-4xl font-serif font-bold text-primary-600">

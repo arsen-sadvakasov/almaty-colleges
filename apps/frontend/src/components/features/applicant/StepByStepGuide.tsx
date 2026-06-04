@@ -28,8 +28,8 @@ export function StepByStepGuide() {
   ];
 
   return (
-    <div className="bg-white p-6 sm:p-8 rounded-3xl border border-neutral-200 shadow-sm">
-      <h2 className="text-2xl font-serif font-bold text-neutral-900 mb-8">{t('title')}</h2>
+    <div className="bg-white dark:bg-neutral-900 p-6 sm:p-8 rounded-3xl border border-neutral-200 dark:border-neutral-800 shadow-sm transition-colors">
+      <h2 className="text-2xl font-serif font-bold text-neutral-900 dark:text-neutral-100 mb-8">{t('title')}</h2>
       
       <div className="relative">
         <div className="absolute top-0 bottom-0 left-6 w-0.5 bg-primary-100 hidden sm:block" />
@@ -37,12 +37,12 @@ export function StepByStepGuide() {
         <div className="space-y-8">
           {steps.map((step, idx) => (
             <div key={idx} className="relative flex gap-6 items-start">
-              <div className="w-12 h-12 rounded-full bg-primary-50 border-4 border-white flex items-center justify-center flex-shrink-0 z-10 shadow-sm">
+              <div className="w-12 h-12 rounded-full bg-primary-50 dark:bg-primary-900/30 border-4 border-white dark:border-neutral-900 flex items-center justify-center flex-shrink-0 z-10 shadow-sm transition-colors">
                 {step.icon}
               </div>
               <div className="pt-2">
-                <h3 className="font-bold text-neutral-900 text-lg mb-2">{t('step', { number: idx + 1 })}: {step.title}</h3>
-                <p className="text-neutral-600">{step.desc}</p>
+                <h3 className="font-bold text-neutral-900 dark:text-neutral-100 text-lg mb-2">{t('step', { number: idx + 1 })}: {step.title}</h3>
+                <p className="text-neutral-600 dark:text-neutral-400">{step.desc}</p>
               </div>
             </div>
           ))}
