@@ -12,7 +12,7 @@ export function HeroSection() {
         style={{ backgroundImage: 'url("/hero-bg.jpg")' }}
       />
       {/* Semi-transparent Overlay */}
-      <div className="absolute inset-0 bg-primary-900/80 backdrop-blur-[2px]" />
+      <div className="absolute inset-0 bg-primary-900/80 dark:bg-neutral-950/80 backdrop-blur-[2px] transition-colors" />
       
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold tracking-tight mb-6 max-w-4xl mx-auto leading-tight">
@@ -23,7 +23,7 @@ export function HeroSection() {
         </p>
         
         {/* Search Bar */}
-        <form action="/colleges" className="max-w-2xl mx-auto bg-white rounded-2xl p-2 shadow-lg flex items-center focus-within:ring-2 focus-within:ring-primary-500 transition-shadow">
+        <form action="/colleges" className="max-w-2xl mx-auto bg-white dark:bg-neutral-900 rounded-2xl p-2 shadow-lg flex items-center focus-within:ring-2 focus-within:ring-primary-500 transition-all">
           <div className="pl-4 text-neutral-400">
             <Search className="w-6 h-6" />
           </div>
@@ -31,7 +31,7 @@ export function HeroSection() {
             type="text" 
             name="q"
             placeholder={t('searchPlaceholder')}
-            className="w-full bg-transparent border-none outline-none text-neutral-900 px-4 py-3 placeholder:text-neutral-400 text-lg"
+            className="flex-1 bg-transparent border-none px-6 py-3 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 focus:outline-none"
           />
           <button type="submit" className="bg-primary-500 hover:bg-primary-500/90 text-white px-8 py-3 rounded-xl font-medium transition-colors">
             {t('searchButton')}

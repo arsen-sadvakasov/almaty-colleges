@@ -5,7 +5,7 @@ export function Footer() {
   const t = useTranslations('Footer');
 
   return (
-    <footer className="bg-primary-900 text-neutral-200 py-12 mt-auto">
+    <footer className="bg-primary-900 dark:bg-neutral-950 text-neutral-200 py-12 mt-auto transition-colors">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
         <div className="col-span-1 md:col-span-2">
           <Link href="/" className="flex items-center gap-2 mb-4">

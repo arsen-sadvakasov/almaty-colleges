@@ -11,7 +11,7 @@ export function FAQSection() {
   ];
 
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-white dark:bg-neutral-900 transition-colors">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
         <h2 className="text-3xl font-serif font-bold text-neutral-900 mb-12 text-center">{t('title')}</h2>
         <div className="space-y-4">
@@ -31,7 +31,7 @@ export function ContactSection() {
   const t = useTranslations('Contact');
 
   return (
-    <section className="py-24 bg-primary-900 text-white">
+    <section className="py-24 bg-primary-900 text-white transition-colors">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
@@ -62,16 +62,16 @@ export function ContactSection() {
             </div>
           </div>
           
-          <div className="bg-white rounded-3xl p-8 lg:p-10 text-neutral-900 shadow-2xl">
+          <div className="bg-white dark:bg-neutral-900 rounded-3xl p-8 lg:p-10 text-neutral-900 dark:text-neutral-100 shadow-2xl transition-colors">
             <h3 className="text-2xl font-serif font-bold mb-6">{t('formTitle')}</h3>
             <form className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-2">{t('nameLabel')}</label>
-                <input type="text" className="w-full border border-neutral-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500" placeholder={t('namePlaceholder')} />
+                <label className="block text-sm font-medium mb-2 dark:text-neutral-300">{t('nameLabel')}</label>
+                <input type="text" className="w-full bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors" placeholder={t('namePlaceholder')} />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">{t('phoneLabel')}</label>
-                <input type="tel" className="w-full border border-neutral-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500" placeholder="+7 (___) ___-__-__" />
+                <label className="block text-sm font-medium mb-2 dark:text-neutral-300">{t('phoneLabel')}</label>
+                <input type="tel" className="w-full bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors" placeholder="+7 (___) ___-__-__" />
               </div>
               <button className="w-full bg-primary-500 hover:bg-primary-600 text-white font-medium py-3 rounded-xl transition-colors mt-2">
                 {t('submit')}
