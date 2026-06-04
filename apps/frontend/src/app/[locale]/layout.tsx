@@ -8,6 +8,7 @@ const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-inter" }
 const playfair = Playfair_Display({ subsets: ["latin", "cyrillic"], variable: "--font-playfair" });
 
 import { getTranslations } from 'next-intl/server';
+import { Preloader } from '@/components/layout/Preloader';
 
 export async function generateMetadata({ params }: { params: Promise<{locale: string}> }): Promise<Metadata> {
   const { locale } = await params;
@@ -44,6 +45,7 @@ export default async function RootLayout({
     <html lang={locale} className={`${inter.variable} ${playfair.variable}`}>
       <body className="font-sans antialiased text-neutral-900 bg-neutral-50 flex flex-col min-h-screen">
         <NextIntlClientProvider messages={messages}>
+          <Preloader />
           {children}
         </NextIntlClientProvider>
       </body>
