@@ -20,10 +20,10 @@ export default async function ComparePage({ params }: { params: Promise<{locale:
   return (
     <>
       <Header />
-      <main className="flex-1 bg-neutral-50 pb-20">
+      <main className="flex-1 bg-neutral-50 dark:bg-neutral-950 pb-20 transition-colors">
         
         {/* Page Header */}
-        <div className="bg-primary-900 py-16 text-white mb-12">
+        <div className="bg-primary-900 dark:bg-neutral-900 py-16 text-white mb-12 transition-colors">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-sm">
@@ -31,7 +31,7 @@ export default async function ComparePage({ params }: { params: Promise<{locale:
               </div>
               <h1 className="text-3xl md:text-5xl font-serif font-bold">{t('title')}</h1>
             </div>
-            <p className="text-primary-100 max-w-2xl text-lg">
+            <p className="text-primary-100 dark:text-neutral-400 max-w-2xl text-lg">
               {t('subtitle')}
             </p>
           </div>

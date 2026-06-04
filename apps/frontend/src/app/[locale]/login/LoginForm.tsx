@@ -18,24 +18,24 @@ export function LoginForm() {
       )}
       <div className="space-y-4">
         <div>
-          <label htmlFor="identifier" className="block text-sm font-medium text-neutral-700">{t('identifierLabel')}</label>
+          <label htmlFor="identifier" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">{t('identifierLabel')}</label>
           <input
             id="identifier"
             name="identifier"
             type="text"
             required
-            className="mt-1 block w-full px-4 py-3 border border-neutral-200 rounded-xl text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all sm:text-sm"
+            className="mt-1 block w-full px-4 py-3 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all sm:text-sm"
             placeholder={t('identifierPlaceholder')}
           />
         </div>
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-neutral-700">{t('passwordLabel')}</label>
+          <label htmlFor="password" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">{t('passwordLabel')}</label>
           <input
             id="password"
             name="password"
             type="password"
             required
-            className="mt-1 block w-full px-4 py-3 border border-neutral-200 rounded-xl text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all sm:text-sm"
+            className="mt-1 block w-full px-4 py-3 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all sm:text-sm"
             placeholder={t('passwordPlaceholder')}
           />
         </div>
@@ -55,7 +55,7 @@ function SubmitButton({ t }: { t: any }) {
     <button
       type="submit"
       disabled={pending}
-      className="w-full flex justify-center py-3 px-4 rounded-xl shadow-sm text-sm font-bold text-white bg-primary-900 hover:bg-primary-900/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
+      className="w-full flex justify-center py-3 px-4 rounded-xl shadow-sm text-sm font-bold text-white bg-primary-900 dark:bg-primary-600 hover:bg-primary-900/90 dark:hover:bg-primary-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
     >
       {pending ? t('loginButtonPending') : t('loginButton')}
     </button>

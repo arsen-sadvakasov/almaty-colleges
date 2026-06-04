@@ -32,18 +32,18 @@ export function RegisterForm({ children, onSuccess }: { children?: React.ReactNo
       )}
       <div className="space-y-4">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-neutral-700">{t('nameLabel')}</label>
+          <label htmlFor="name" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">{t('nameLabel')}</label>
           <input
             id="name"
             name="name"
             type="text"
             required
-            className="mt-1 block w-full px-4 py-3 border border-neutral-200 rounded-xl text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all sm:text-sm"
+            className="mt-1 block w-full px-4 py-3 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all sm:text-sm"
             placeholder={t('namePlaceholder')}
           />
         </div>
         <div>
-          <label htmlFor="iin" className="block text-sm font-medium text-neutral-700">{t('iinLabel')}</label>
+          <label htmlFor="iin" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">{t('iinLabel')}</label>
           <input
             id="iin"
             name="iin"
@@ -51,54 +51,54 @@ export function RegisterForm({ children, onSuccess }: { children?: React.ReactNo
             required
             pattern="\d{12}"
             title="ИИН должен состоять из 12 цифр"
-            className="mt-1 block w-full px-4 py-3 border border-neutral-200 rounded-xl text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all sm:text-sm"
+            className="mt-1 block w-full px-4 py-3 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all sm:text-sm"
             placeholder={t('iinPlaceholder')}
           />
         </div>
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-neutral-700">{t('emailLabel')}</label>
+          <label htmlFor="email" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">{t('emailLabel')}</label>
           <input
             id="email"
             name="email"
             type="email"
             required
-            className="mt-1 block w-full px-4 py-3 border border-neutral-200 rounded-xl text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all sm:text-sm"
+            className="mt-1 block w-full px-4 py-3 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all sm:text-sm"
             placeholder={t('emailPlaceholder')}
           />
         </div>
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-neutral-700">{t('phoneLabel')}</label>
+          <label htmlFor="phone" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">{t('phoneLabel')}</label>
           <input
             id="phone"
             name="phone"
             type="tel"
             required
-            className="mt-1 block w-full px-4 py-3 border border-neutral-200 rounded-xl text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all sm:text-sm"
+            className="mt-1 block w-full px-4 py-3 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all sm:text-sm"
             placeholder={t('phonePlaceholder')}
           />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-neutral-700">{t('passwordLabel')}</label>
+            <label htmlFor="password" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">{t('passwordLabel')}</label>
             <input
               id="password"
               name="password"
               type="password"
               required
               minLength={6}
-              className="mt-1 block w-full px-4 py-3 border border-neutral-200 rounded-xl text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all sm:text-sm"
+              className="mt-1 block w-full px-4 py-3 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all sm:text-sm"
               placeholder={t('passwordPlaceholder')}
             />
           </div>
           <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-neutral-700">{t('confirmPasswordLabel')}</label>
+            <label htmlFor="confirmPassword" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">{t('confirmPasswordLabel')}</label>
             <input
               id="confirmPassword"
               name="confirmPassword"
               type="password"
               required
               minLength={6}
-              className="mt-1 block w-full px-4 py-3 border border-neutral-200 rounded-xl text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all sm:text-sm"
+              className="mt-1 block w-full px-4 py-3 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all sm:text-sm"
               placeholder={t('confirmPasswordPlaceholder')}
             />
           </div>
@@ -119,7 +119,7 @@ function SubmitButton({ t }: { t: any }) {
     <button
       type="submit"
       disabled={pending}
-      className="w-full flex justify-center py-3 px-4 rounded-xl shadow-sm text-sm font-bold text-white bg-primary-900 hover:bg-primary-900/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
+      className="w-full flex justify-center py-3 px-4 rounded-xl shadow-sm text-sm font-bold text-white bg-primary-900 dark:bg-primary-600 hover:bg-primary-900/90 dark:hover:bg-primary-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
     >
       {pending ? t('registerButtonPending') : t('registerButton')}
     </button>
