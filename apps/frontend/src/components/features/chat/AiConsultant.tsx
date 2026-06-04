@@ -65,9 +65,9 @@ export function AiConsultant() {
   };
 
   return (
-    <div className="bg-white rounded-3xl border border-neutral-200 shadow-sm flex flex-col h-[600px] overflow-hidden">
+    <div className="bg-white dark:bg-neutral-900 rounded-3xl border border-neutral-200 dark:border-neutral-800 shadow-sm flex flex-col h-[600px] overflow-hidden transition-colors">
       {/* Header */}
-      <div className="bg-primary-900 text-white p-4 sm:p-6 flex items-center justify-between flex-shrink-0">
+      <div className="bg-primary-900 dark:bg-neutral-800 text-white p-4 sm:p-6 flex items-center justify-between flex-shrink-0 transition-colors">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm relative">
             <Bot className="w-6 h-6 text-white" />
@@ -83,13 +83,13 @@ export function AiConsultant() {
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-neutral-50 space-y-6">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-neutral-50 dark:bg-neutral-950 space-y-6 transition-colors">
         {messages.map((msg) => (
           <div key={msg.id} className={`flex gap-4 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
             <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${msg.role === "user" ? "bg-primary-100 text-primary-600" : "bg-primary-900 text-white"}`}>
               {msg.role === "user" ? <User className="w-5 h-5" /> : <Bot className="w-5 h-5" />}
             </div>
-            <div className={`max-w-[80%] p-4 rounded-2xl ${msg.role === "user" ? "bg-primary-500 text-white rounded-tr-none" : "bg-white border border-neutral-200 text-neutral-800 rounded-tl-none shadow-sm"}`}>
+            <div className={`max-w-[80%] p-4 rounded-2xl ${msg.role === "user" ? "bg-primary-500 text-white rounded-tr-none" : "bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-800 dark:text-neutral-200 rounded-tl-none shadow-sm transition-colors"}`}>
               {msg.content}
             </div>
           </div>
@@ -100,9 +100,9 @@ export function AiConsultant() {
             <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 bg-primary-900 text-white">
               <Bot className="w-5 h-5" />
             </div>
-            <div className="bg-white border border-neutral-200 p-4 rounded-2xl rounded-tl-none shadow-sm flex items-center gap-2">
+            <div className="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 p-4 rounded-2xl rounded-tl-none shadow-sm flex items-center gap-2 transition-colors">
               <Loader2 className="w-5 h-5 text-primary-500 animate-spin" />
-              <span className="text-neutral-500 text-sm">{t('typing')}</span>
+              <span className="text-neutral-500 dark:text-neutral-400 text-sm">{t('typing')}</span>
             </div>
           </div>
         )}
@@ -110,7 +110,7 @@ export function AiConsultant() {
       </div>
 
       {/* Input Area */}
-      <div className="p-4 sm:p-6 bg-white border-t border-neutral-200 flex-shrink-0">
+      <div className="p-4 sm:p-6 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800 flex-shrink-0 transition-colors">
         <div className="relative flex items-center">
           <input
             type="text"
@@ -118,7 +118,7 @@ export function AiConsultant() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={t('placeholder')}
-            className="w-full pl-6 pr-14 py-4 bg-neutral-100 border-transparent focus:bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-500 rounded-2xl transition-all"
+            className="w-full pl-6 pr-14 py-4 bg-neutral-100 dark:bg-neutral-800 border-transparent focus:bg-white dark:focus:bg-neutral-900 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 text-neutral-900 dark:text-neutral-100 rounded-2xl transition-all"
             disabled={isLoading}
           />
           <button
@@ -129,7 +129,7 @@ export function AiConsultant() {
             <Send className="w-5 h-5 ml-0.5" />
           </button>
         </div>
-        <p className="text-center text-xs text-neutral-400 mt-3">
+        <p className="text-center text-xs text-neutral-400 dark:text-neutral-500 mt-3">
           {t('disclaimer')}
         </p>
       </div>
