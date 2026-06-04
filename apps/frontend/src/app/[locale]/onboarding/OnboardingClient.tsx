@@ -103,14 +103,18 @@ export function OnboardingClient() {
         <div className={`w-full flex flex-col lg:flex-row ${slideIndex === 1 ? 'lg:flex-row-reverse' : ''} items-center justify-between gap-8 lg:gap-20 flex-1 mt-10 lg:mt-0`}>
           
           {/* Text Container */}
-          <motion.div layout className="w-full lg:w-1/2 flex flex-col items-center lg:items-start justify-center relative min-h-[200px] lg:min-h-[250px] text-center lg:text-left">
+          <motion.div 
+            layout 
+            transition={{ type: "spring", stiffness: 150, damping: 20 }}
+            className="w-full lg:w-1/2 flex flex-col items-center lg:items-start justify-center relative min-h-[200px] lg:min-h-[250px] text-center lg:text-left"
+          >
             <AnimatePresence mode="wait">
               <motion.div
                 key={slideIndex}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4 }}
+                transition={{ type: "spring", stiffness: 200, damping: 25, duration: 0.5 }}
                 className="w-full"
               >
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-neutral-900 mb-4 lg:mb-6 leading-tight">
@@ -124,14 +128,18 @@ export function OnboardingClient() {
           </motion.div>
 
           {/* Image Container */}
-          <motion.div layout className="w-full lg:w-1/2 flex justify-center relative h-[250px] sm:h-[350px] lg:h-auto lg:min-h-[450px] mt-6 lg:mt-0">
+          <motion.div 
+            layout 
+            transition={{ type: "spring", stiffness: 150, damping: 20 }}
+            className="w-full lg:w-1/2 flex justify-center relative h-[250px] sm:h-[350px] lg:h-auto lg:min-h-[450px] mt-6 lg:mt-0"
+          >
             <AnimatePresence mode="wait">
               <motion.div
                 key={slideIndex}
-                initial={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.05 }}
-                transition={{ duration: 0.5 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ type: "spring", stiffness: 200, damping: 25, duration: 0.5 }}
                 className="absolute inset-0 flex items-center justify-center"
               >
                 <div className="relative w-full max-w-xs sm:max-w-sm lg:max-w-md aspect-square rounded-3xl overflow-hidden shadow-2xl">
