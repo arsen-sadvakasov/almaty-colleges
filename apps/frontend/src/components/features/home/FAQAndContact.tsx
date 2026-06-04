@@ -13,12 +13,12 @@ export function FAQSection() {
   return (
     <section className="py-24 bg-white dark:bg-neutral-900 transition-colors">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-        <h2 className="text-3xl font-serif font-bold text-neutral-900 mb-12 text-center">{t('title')}</h2>
+        <h2 className="text-3xl font-serif font-bold text-neutral-900 dark:text-neutral-100 mb-12 text-center">{t('title')}</h2>
         <div className="space-y-4">
           {faqs.map((faq, idx) => (
-            <div key={idx} className="border border-neutral-200 rounded-2xl p-6 hover:border-primary-200 transition-colors">
-              <h3 className="text-lg font-medium text-neutral-900 mb-2">{faq.q}</h3>
-              <p className="text-neutral-500">{faq.a}</p>
+            <div key={idx} className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-800/50 rounded-2xl p-6 hover:border-primary-500 dark:hover:border-primary-500 transition-colors">
+              <h3 className="text-lg font-medium text-neutral-900 dark:text-neutral-100 mb-2">{faq.q}</h3>
+              <p className="text-neutral-500 dark:text-neutral-400">{faq.a}</p>
             </div>
           ))}
         </div>
