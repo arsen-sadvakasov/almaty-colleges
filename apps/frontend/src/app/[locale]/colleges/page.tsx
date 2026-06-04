@@ -40,15 +40,15 @@ export default async function CollegesPage({
     <>
       <Header />
       <main className="flex-1">
-        <div className="bg-primary-900 py-12 text-white">
+        <div className="bg-primary-900 dark:bg-neutral-900 py-12 text-white transition-colors">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h1 className="text-3xl md:text-4xl font-serif font-bold mb-4">{t('title')}</h1>
-            <p className="text-primary-100 max-w-2xl text-lg">
+            <p className="text-primary-100 dark:text-neutral-400 max-w-2xl text-lg">
               {t('subtitle')}
             </p>
           </div>
         </div>
-        
+
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <CollegesList colleges={colleges} initialSearch={q} />
         </div>

@@ -9,6 +9,7 @@ const playfair = Playfair_Display({ subsets: ["latin", "cyrillic"], variable: "-
 
 import { getTranslations } from 'next-intl/server';
 import { Preloader } from '@/components/layout/Preloader';
+import { ThemeProvider } from '@/components/providers/ThemeProvider';
 
 export async function generateMetadata({ params }: { params: Promise<{locale: string}> }): Promise<Metadata> {
   const { locale } = await params;
@@ -42,12 +43,14 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={`${inter.variable} ${playfair.variable}`}>
-      <body className="font-sans antialiased text-neutral-900 bg-neutral-50 flex flex-col min-h-screen">
-        <NextIntlClientProvider messages={messages}>
-          <Preloader />
-          {children}
-        </NextIntlClientProvider>
+    <html lang={locale} className={`${inter.variable} ${playfair.variable}`} suppressHydrationWarning>
+      <body className="font-sans antialiased text-neutral-900 bg-neutral-50 dark:bg-neutral-950 dark:text-neutral-50 flex flex-col min-h-screen transition-colors duration-300">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <NextIntlClientProvider messages={messages}>
+            <Preloader />
+            {children}
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

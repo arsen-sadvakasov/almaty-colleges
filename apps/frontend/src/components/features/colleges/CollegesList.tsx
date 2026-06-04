@@ -74,14 +74,14 @@ export function CollegesList({ colleges, initialSearch = "" }: { colleges: Colle
     <div className="flex flex-col lg:flex-row gap-8">
       {/* Sidebar Filters */}
       <aside className="w-full lg:w-72 flex-shrink-0 space-y-8">
-        <div className="bg-white p-6 rounded-2xl border border-neutral-200">
-          <h3 className="font-serif font-bold text-lg mb-6">{t('filters')}</h3>
+        <div className="bg-white dark:bg-neutral-900 p-6 rounded-2xl border border-neutral-200 dark:border-neutral-800 transition-colors">
+          <h3 className="font-serif font-bold text-lg mb-6 text-neutral-900 dark:text-neutral-100">{t('filters')}</h3>
           
           <div className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-neutral-900 mb-2">{t('city')}</label>
+              <label className="block text-sm font-medium text-neutral-900 dark:text-neutral-100 mb-2">{t('city')}</label>
               <select 
-                className="w-full border border-neutral-200 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+                className="w-full border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm transition-colors"
                 value={cityFilter}
                 onChange={(e) => { setCityFilter(e.target.value); setPage(1); }}
               >
@@ -91,9 +91,9 @@ export function CollegesList({ colleges, initialSearch = "" }: { colleges: Colle
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-neutral-900 mb-2">{t('specialty')}</label>
+              <label className="block text-sm font-medium text-neutral-900 dark:text-neutral-100 mb-2">{t('specialty')}</label>
               <select 
-                className="w-full border border-neutral-200 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+                className="w-full border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm transition-colors"
                 value={specialtyFilter}
                 onChange={(e) => { setSpecialtyFilter(e.target.value); setPage(1); }}
               >
@@ -103,17 +103,17 @@ export function CollegesList({ colleges, initialSearch = "" }: { colleges: Colle
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-neutral-900 mb-3">{t('institutionType')}</label>
+              <label className="block text-sm font-medium text-neutral-900 dark:text-neutral-100 mb-3">{t('institutionType')}</label>
               <div className="space-y-2">
-                <label className="flex items-center gap-2 text-sm cursor-pointer">
+                <label className="flex items-center gap-2 text-sm cursor-pointer text-neutral-700 dark:text-neutral-300">
                   <input type="radio" name="type" checked={typeFilter === "all"} onChange={() => { setTypeFilter("all"); setPage(1); }} className="text-primary-500 focus:ring-primary-500" />
                   {t('all')}
                 </label>
-                <label className="flex items-center gap-2 text-sm cursor-pointer">
+                <label className="flex items-center gap-2 text-sm cursor-pointer text-neutral-700 dark:text-neutral-300">
                   <input type="radio" name="type" checked={typeFilter === "state"} onChange={() => { setTypeFilter("state"); setPage(1); }} className="text-primary-500 focus:ring-primary-500" />
                   {t('state')}
                 </label>
-                <label className="flex items-center gap-2 text-sm cursor-pointer">
+                <label className="flex items-center gap-2 text-sm cursor-pointer text-neutral-700 dark:text-neutral-300">
                   <input type="radio" name="type" checked={typeFilter === "private"} onChange={() => { setTypeFilter("private"); setPage(1); }} className="text-primary-500 focus:ring-primary-500" />
                   {t('private')}
                 </label>
@@ -121,13 +121,13 @@ export function CollegesList({ colleges, initialSearch = "" }: { colleges: Colle
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-neutral-900 mb-3">{t('additional')}</label>
+              <label className="block text-sm font-medium text-neutral-900 dark:text-neutral-100 mb-3">{t('additional')}</label>
               <div className="space-y-3">
-                <label className="flex items-center gap-2 text-sm cursor-pointer">
+                <label className="flex items-center gap-2 text-sm cursor-pointer text-neutral-700 dark:text-neutral-300">
                   <input type="checkbox" checked={hasDormitory} onChange={(e) => { setHasDormitory(e.target.checked); setPage(1); }} className="rounded text-primary-500 focus:ring-primary-500" />
                   {t('hasDormitory')}
                 </label>
-                <label className="flex items-center gap-2 text-sm cursor-pointer">
+                <label className="flex items-center gap-2 text-sm cursor-pointer text-neutral-700 dark:text-neutral-300">
                   <input type="checkbox" checked={hasGrants} onChange={(e) => { setHasGrants(e.target.checked); setPage(1); }} className="rounded text-primary-500 focus:ring-primary-500" />
                   {t('hasGrants')}
                 </label>
@@ -140,7 +140,7 @@ export function CollegesList({ colleges, initialSearch = "" }: { colleges: Colle
       {/* Main Content */}
       <div className="flex-1">
         {/* Search & Sort */}
-        <div className="bg-white p-4 rounded-2xl border border-neutral-200 mb-6 flex flex-col sm:flex-row gap-4 items-center justify-between">
+        <div className="bg-white dark:bg-neutral-900 p-4 rounded-2xl border border-neutral-200 dark:border-neutral-800 mb-6 flex flex-col sm:flex-row gap-4 items-center justify-between transition-colors">
           <div className="relative w-full sm:max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
             <input 
@@ -148,15 +148,15 @@ export function CollegesList({ colleges, initialSearch = "" }: { colleges: Colle
               placeholder={t('searchPlaceholder')}
               value={search}
               onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-              className="w-full pl-9 pr-4 py-2 border border-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+              className="w-full pl-9 pr-4 py-2 border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm transition-colors"
             />
           </div>
           <div className="flex items-center gap-2 w-full sm:w-auto">
-            <span className="text-sm text-neutral-500 whitespace-nowrap">{t('sortBy')}</span>
+            <span className="text-sm text-neutral-500 dark:text-neutral-400 whitespace-nowrap">{t('sortBy')}</span>
             <select 
               value={sortBy} 
               onChange={(e) => setSortBy(e.target.value as "rating" | "name")}
-              className="w-full sm:w-auto border-none bg-neutral-50 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 font-medium"
+              className="w-full sm:w-auto border-none bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 font-medium transition-colors"
             >
               <option value="rating">{t('byRating')}</option>
               <option value="name">{t('byName')}</option>
@@ -165,8 +165,8 @@ export function CollegesList({ colleges, initialSearch = "" }: { colleges: Colle
         </div>
 
         {/* Results Info */}
-        <div className="mb-6 text-neutral-500">
-          {t('foundColleges')} <span className="font-bold text-neutral-900">{filteredColleges.length}</span>
+        <div className="mb-6 text-neutral-500 dark:text-neutral-400">
+          {t('foundColleges')} <span className="font-bold text-neutral-900 dark:text-neutral-100">{filteredColleges.length}</span>
         </div>
 
         {/* Grid */}
@@ -176,10 +176,10 @@ export function CollegesList({ colleges, initialSearch = "" }: { colleges: Colle
               <Link 
                 key={college.id} 
                 href={`/colleges/${college.id}`}
-                className="group bg-white rounded-2xl border border-neutral-200 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col"
+                className="group bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col"
               >
-                <div className="h-40 bg-neutral-200 relative overflow-hidden flex-shrink-0">
-                  <div className="absolute inset-0 bg-primary-900/5 flex items-center justify-center">
+                <div className="h-40 bg-neutral-200 dark:bg-neutral-800 relative overflow-hidden flex-shrink-0">
+                  <div className="absolute inset-0 bg-primary-900/5 dark:bg-primary-500/10 flex items-center justify-center">
                     <Building2 className="w-10 h-10 text-primary-900/20" />
                   </div>
                   {college.hasGrants && (
@@ -190,18 +190,18 @@ export function CollegesList({ colleges, initialSearch = "" }: { colleges: Colle
                 </div>
                 <div className="p-5 flex flex-col flex-grow">
                   <div className="flex justify-between items-start mb-3">
-                    <div className="flex items-center gap-1.5 text-xs font-medium text-primary-500 bg-primary-50 w-fit px-2 py-1 rounded-md">
+                    <div className="flex items-center gap-1.5 text-xs font-medium text-primary-500 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 w-fit px-2 py-1 rounded-md">
                       {college.isState ? t('state') : t('private')}
                     </div>
-                    <div className="flex items-center gap-1 text-sm font-bold text-neutral-900">
+                    <div className="flex items-center gap-1 text-sm font-bold text-neutral-900 dark:text-neutral-100">
                       <Star className="w-4 h-4 fill-warning text-warning" />
                       {college.rating}
                     </div>
                   </div>
-                  <h3 className="font-serif font-bold text-lg text-neutral-900 mb-3 group-hover:text-primary-500 transition-colors line-clamp-2">
+                  <h3 className="font-serif font-bold text-lg text-neutral-900 dark:text-neutral-100 mb-3 group-hover:text-primary-500 dark:group-hover:text-primary-400 transition-colors line-clamp-2">
                     {college.name}
                   </h3>
-                  <div className="space-y-2 text-sm text-neutral-500 mt-auto">
+                  <div className="space-y-2 text-sm text-neutral-500 dark:text-neutral-400 mt-auto">
                     <div className="flex items-center gap-2">
                       <MapPin className="w-4 h-4" />
                       <span>{college.city}</span>
@@ -218,10 +218,10 @@ export function CollegesList({ colleges, initialSearch = "" }: { colleges: Colle
             ))}
           </div>
         ) : (
-          <div className="bg-white border border-neutral-200 rounded-2xl p-12 text-center">
-            <Building2 className="w-12 h-12 text-neutral-300 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-neutral-900 mb-2">{t('notFoundTitle')}</h3>
-            <p className="text-neutral-500">{t('notFoundSubtitle')}</p>
+          <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-12 text-center transition-colors">
+            <Building2 className="w-12 h-12 text-neutral-300 dark:text-neutral-600 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-neutral-900 dark:text-neutral-100 mb-2">{t('notFoundTitle')}</h3>
+            <p className="text-neutral-500 dark:text-neutral-400">{t('notFoundSubtitle')}</p>
           </div>
         )}
 
@@ -231,7 +231,7 @@ export function CollegesList({ colleges, initialSearch = "" }: { colleges: Colle
             <button 
               onClick={() => setPage(p => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="px-4 py-2 border border-neutral-200 rounded-xl text-sm font-medium disabled:opacity-50 hover:bg-neutral-50"
+              className="px-4 py-2 border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 rounded-xl text-sm font-medium disabled:opacity-50 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
             >
               {t('back')}
             </button>
@@ -240,7 +240,7 @@ export function CollegesList({ colleges, initialSearch = "" }: { colleges: Colle
                 <button
                   key={i}
                   onClick={() => setPage(i + 1)}
-                  className={`w-10 h-10 rounded-xl text-sm font-medium transition-colors ${page === i + 1 ? 'bg-primary-500 text-white' : 'hover:bg-neutral-100 text-neutral-700'}`}
+                  className={`w-10 h-10 rounded-xl text-sm font-medium transition-colors ${page === i + 1 ? 'bg-primary-500 text-white' : 'hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-700 dark:text-neutral-300'}`}
                 >
                   {i + 1}
                 </button>
@@ -249,7 +249,7 @@ export function CollegesList({ colleges, initialSearch = "" }: { colleges: Colle
             <button 
               onClick={() => setPage(p => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
-              className="px-4 py-2 border border-neutral-200 rounded-xl text-sm font-medium disabled:opacity-50 hover:bg-neutral-50"
+              className="px-4 py-2 border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 rounded-xl text-sm font-medium disabled:opacity-50 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
             >
               {t('forward')}
             </button>
